@@ -15,10 +15,14 @@
           qmail, Dr. D J Bernstein. This new  release  is  a  complete
           makeover to the original source(djbdns-1.05) and is meant to
           make life a lot more pleasant. The notable  changes  so  far
-          are  in  the  set-up  & configuration steps.  Also, this new
-          release is distributed under the GNU General Public Licence.
-          See ChangeLog for more details.
+          are  in  the  set-up  &  configuration  steps.  The original
+          source is in public-domain since late Dec 2007.
 
+               Please see: http://cr.yp.to/distributors.html
+
+          Nevertheless, this new release is distributed under the  GNU
+          General  Public  Licence  for  good. See ChangeLog  for more
+          details.
 
           Installation:
           -------------
@@ -27,11 +31,11 @@
 
                sh>$ ./configure [ --prefix=/usr/local ]
                sh>$ make
-               sh>$ make install
+               sh># make install
 
-          Once  installed,  On  Linux  machines  add ‘dnscache’ to the
-          system services by following steps. Note that, if you  chose
-          a  different  install  prefix with ‘--prefix’ use that while
+          Once installed, On Linux  machines  add  ‘dnscache’  to  the
+          system  services by following steps. Note that, if you chose
+          a different install prefix with ‘--prefix’  use  that  while
           creating the link with ln.
 
                sh># ln -s /usr/local/bin/djbdns /etc/init.d/djbdns
@@ -41,7 +45,7 @@
           Now you can start the service by
 
                sh># service djbdns start
-                         OR
+                        OR
                sh># dnscache -D
 
           Consult the dnscahce(1) manual page for more help.
@@ -50,17 +54,13 @@
           Problems:
           ---------
 
-               If you encounter any problems while  installing  djbdns
-          OR  find any bugs in working of djbdns, please send an email
+               If  you  encounter any problems while installing djbdns
+          OR find any bugs in working of djbdns, please send an  email
           to  <prasad@redhat.com>  describing  in  details  about  the
           problem/bug.
 
 
 
-
           Thank you!
-
-
-
 
 

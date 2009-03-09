@@ -454,7 +454,7 @@ bin_SCRIPTS = djbdns
 noinst_SCRIPTS = dnstracesort 
 noinst_MANS = dnscache.ms
 nodist_man1_MANS = dnscache.1
-CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
+CLEANFILES = $(bin_SCRIPTS) $(noinst_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
 

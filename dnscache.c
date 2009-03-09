@@ -738,9 +738,9 @@ redirect_to_log (const char *logfile)
 {
     assert (logfile != NULL);
 
-    int fd = 0, mode = S_IRUSR | S_IWUSR;
+    int fd = 0, perm = S_IRUSR | S_IWUSR;
 
-    if ((fd = open (logfile, O_CREAT | O_WRONLY | O_APPEND, mode)) == -1)
+    if ((fd = open (logfile, O_CREAT | O_WRONLY | O_APPEND, perm)) == -1)
         err (-1, "could not open logfile `%s'", logfile);
 
     if (dup2 (fd, STDOUT_FILENO) == -1)
@@ -757,10 +757,10 @@ void
 write_pid (void)
 {
     char pid[] = PIDFILE;
-    int n = 0, fd = 0, mode = 0;
+    int n = 0, fd = 0, perm = 0;
 
-    mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-    if ((fd = open (pid, O_CREAT | O_WRONLY | O_TRUNC, mode)) == -1)
+    perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
+    if ((fd = open (pid, O_CREAT | O_WRONLY | O_TRUNC, perm)) == -1)
         err (-1, "could not open file: `%s'", pid);
 
     memset (pid, '\0', sizeof (pid));
