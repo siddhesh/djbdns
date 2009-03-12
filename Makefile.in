@@ -268,7 +268,7 @@ am_walldns_conf_OBJECTS = walldns-conf.$(OBJEXT) \
 walldns_conf_OBJECTS = $(am_walldns_conf_OBJECTS)
 walldns_conf_DEPENDENCIES = libbuffer.a libunix.a libbyte.a
 binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
-SCRIPTS = $(bin_SCRIPTS) $(noinst_SCRIPTS)
+SCRIPTS = $(bin_SCRIPTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -450,11 +450,10 @@ AM_CFLAGS = -g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
                                -D SYSCONFDIR=\"${sysconfdir}\"
 
 SUBDIRS = etc
-bin_SCRIPTS = djbdns
-noinst_SCRIPTS = dnstracesort 
+bin_SCRIPTS = djbdns dnstracesort
 noinst_MANS = dnscache.ms
 nodist_man1_MANS = dnscache.1
-CLEANFILES = $(bin_SCRIPTS) $(noinst_SCRIPTS) $(nodist_man1_MANS)
+CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
 

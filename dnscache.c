@@ -1,3 +1,27 @@
+/*
+ * dnscache.c: This file is part of the `djbdns' project, originally written
+ * by Dr. D J Bernstein and later released under public-domain since late
+ * December 2007 (http://cr.yp.to/distributors.html).
+ *
+ * I've modified this file for good and am releasing this new version under
+ * GNU General Public License.
+ * Copyright (C) 2009 Prasad J Pandit
+ *
+ * This program is a free software; you can redistribute it and/or modify
+ * it under the terms of GNU General Public License as published by Free
+ * Software Foundation; either version 2 of the license or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * of FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 #define _GNU_SOURCE
 
 #include <err.h>
@@ -5,9 +29,10 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <fcntl.h>
+#include <assert.h>
+#include <signal.h>
 #include <string.h>
 #include <stdlib.h>
-#include <assert.h>
 #include <unistd.h>
 #include <getopt.h>
 
@@ -210,12 +235,12 @@ struct tcpclient
 int tactive = 0;
 
 /*
-state 1: buf 0; normal state at beginning of TCP connection
-state 2: buf 0; have read 1 byte of query packet length into len
-state 3: buf allocated; have read pos bytes of buf
-state 0: buf 0; handling query in q
-state -1: buf allocated; have written pos bytes
-*/
+ * state 1: buf 0; normal state at beginning of TCP connection
+ * state 2: buf 0; have read 1 byte of query packet length into len
+ * state 3: buf allocated; have read pos bytes of buf
+ * state 0: buf 0; handling query in q
+ * state -1: buf allocated; have written pos bytes
+ */
 
 void
 t_free (int j)
@@ -770,13 +795,29 @@ write_pid (void)
     close (fd);
 }
 
+void
+handle_term (int n)
+{
+    warnx ("is shutting down: ---\n");
+
+    exit (0);
+}
+
 int
 main (int argc, char *argv[])
 {
     int i = 0;
     time_t t = 0;
+    struct sigaction sa;
     unsigned long cachesize = 0;
     char *x = NULL, char_seed[128];
+
+    sa.sa_handler = handle_term;
+    sigaction (SIGINT, &sa, NULL);
+    sigaction (SIGTERM, &sa, NULL);
+
+    sa.sa_handler = SIG_IGN;
+    sigaction (SIGPIPE, &sa, NULL);
 
     seed_addtime ();
     seed_adduint32 (getpid ());

@@ -23,13 +23,12 @@ noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf \
 	rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get \
 	walldns walldns-conf
 
-bin_SCRIPTS = djbdns
-noinst_SCRIPTS = dnstracesort 
+bin_SCRIPTS = djbdns dnstracesort
 
 noinst_MANS = dnscache.ms
 nodist_man1_MANS = dnscache.1
 
-CLEANFILES = $(bin_SCRIPTS) $(noinst_SCRIPTS) $(nodist_man1_MANS)
+CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
 
