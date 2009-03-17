@@ -36,7 +36,7 @@
 #include <unistd.h>
 #include <getopt.h>
 
-#define VERSION "1.05.1"
+#include "version.h"
 
 #define LOGFILE "/var/log/dnscache.log"
 #define PIDFILE "/var/run/dnscache.pid"

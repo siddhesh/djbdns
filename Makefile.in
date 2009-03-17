@@ -34,11 +34,11 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = dnscache$(EXEEXT)
+bin_PROGRAMS = dnscache$(EXEEXT) dnsip$(EXEEXT)
 noinst_PROGRAMS = axfrdns$(EXEEXT) axfrdns-conf$(EXEEXT) \
 	axfr-get$(EXEEXT) dnscache-conf$(EXEEXT) dnsfilter$(EXEEXT) \
-	dnsip$(EXEEXT) dnsipq$(EXEEXT) dnsmx$(EXEEXT) dnsname$(EXEEXT) \
-	dnsq$(EXEEXT) dnsqr$(EXEEXT) dnstrace$(EXEEXT) dnstxt$(EXEEXT) \
+	dnsipq$(EXEEXT) dnsmx$(EXEEXT) dnsname$(EXEEXT) dnsq$(EXEEXT) \
+	dnsqr$(EXEEXT) dnstrace$(EXEEXT) dnstxt$(EXEEXT) \
 	pickdns$(EXEEXT) pickdns-conf$(EXEEXT) pickdns-data$(EXEEXT) \
 	random-ip$(EXEEXT) rbldns$(EXEEXT) rbldns-conf$(EXEEXT) \
 	rbldns-data$(EXEEXT) tinydns$(EXEEXT) tinydns-conf$(EXEEXT) \

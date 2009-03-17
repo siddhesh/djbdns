@@ -1,5 +1,15 @@
 Mar 17 2009 pjp <prasad@redhat.com>
 
+	* Makefile.am: changed to install `dnsip' command.
+
+	* dnscache.c: changed to include the new "version.h" file. It defines
+	  the VERSION macro.
+
+	* dnsip.c: changed to process command line options with getopt, and
+	  display help menu etc.
+
+	* version.h: new file defines the VERSION macro.
+
 	* alloc.c:
 	  alloc.h:
 	  buffer.c:
@@ -37,7 +47,8 @@ Mar 13 2009 pjp <prasad@redhat.com>
 	* Makefile.am: changed to install `dnstracesort' script.
 
 	* dns_transmit.c: patched with the `d->pos = 0' and `char udpgbuf[4096]
-	  patch from Matthew Dempsky. Did add the copyright disclaimer at the top.
+	  patch from Matthew Dempsky. Did add the copyright disclaimer at the
+	  top.
 	  http://marc.info/?l=djbdns&m=119983010611174&w=3
 	  http://marc.info/?l=djbdns&m=122368590802063&w=2
 
@@ -62,7 +73,7 @@ Mar  3 2009 pjp <prasad@redhat.com>
 	  use of the GNU auto-tools and is fully integrated with the linux
 	  /sbin/service.
 
-	* dnscache.c: reads a configuration file: PREFIX/etc/djbdns/dnscache.conf
+	* dnscache.c: reads configuration file: PREFIX/etc/djbdns/dnscache.conf
 	  PREFIX is the install prefix used by ./configure command.
 
 	* dnscache.c: changed to create log-file under /var/log, pid-file under
