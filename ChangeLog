@@ -1,3 +1,61 @@
+Mar 17 2009 pjp <prasad@redhat.com>
+
+	* alloc.c:
+	  alloc.h:
+	  buffer.c:
+	  buffer.h:
+	  buffer_1.c:
+	  buffer_put.c:
+	  buffer_write.c:
+	  cache.c:
+	  dd.c:
+	  dnscache.c:
+	  fmt_ulong.c:
+	  iopause.c:
+	  ip4.h:
+	  ip4_fmt.c:
+	  log.c:
+	  okclient.c:
+	  prot.c:
+	  query.c:
+	  roots.h:
+	  str.h:
+	  str_chr.c:
+	  str_rchr.c: fixed the str_rchr() function to go from `end to start'
+	  while looking for the given character.
+	  
+	  All the above files are formatted as per the coding style
+	  convenient to me. Also did add the copyright disclaimer at the top.
+
+Mar 13 2009 pjp <prasad@redhat.com>
+	
+	* response.c: patched with the latest Matthew Dempsky patch available
+	  at: http://marc.info/?l=djbdns&m=123613000920446&w=2
+		
+		if (response_len < 16384) ...
+
+	* Makefile.am: changed to install `dnstracesort' script.
+
+	* dns_transmit.c: patched with the `d->pos = 0' and `char udpgbuf[4096]
+	  patch from Matthew Dempsky. Did add the copyright disclaimer at the top.
+	  http://marc.info/?l=djbdns&m=119983010611174&w=3
+	  http://marc.info/?l=djbdns&m=122368590802063&w=2
+
+	* dnscache.c: patched with the SIGPIPE patch from Mark Delany. Did add
+	  copyright disclaimer at the top.
+	  http://marc.info/?l=djbdns&m=104804013229536&w=2
+
+	* error.h: patched to #include <errno.h> on Linux machines. Did add
+	  copyright disclaimer at the top.
+
+	* COPYING: changed to GPL version 2, instead of version 3.
+
+	* dnscache.c: automatic local variable named `mode' renamed to `perm' in
+	  couple of functions as there is already a global variable named mode.
+
+	* readme.ms: changed to reference a web-link wherein DJB put his work in
+	  public-domain. Obviously, the same goes to README.
+
 Mar  3 2009 pjp <prasad@redhat.com>
 
 	* This new release is djbdns version 1.05.1. The new build system makes
@@ -37,8 +95,9 @@ Mar  3 2009 pjp <prasad@redhat.com>
 
 		http://cr.yp.to/djbdns.html
 	
-	and aim is to free it from the daemon of `daemontools', make it as much
-	independent & concise as possible and thus more usable and maintainable.
+	  and aim is to free it from the daemon of `daemontools', make it as much
+	  independent & concise as possible and thus more usable and maintainable.
+
 
 -------------------------------------------------------------------------------
 

@@ -81,29 +81,29 @@ packetquery (char *buf, unsigned int len, char **q,
     errno = error_proto;
     pos = dns_packet_copy (buf, len, 0, header, 12);
     if (!pos)
-      return 0;
+        return 0;
     if (header[2] & 128)
-      return 0; /* must not respond to responses */
+        return 0; /* must not respond to responses */
     if (!(header[2] & 1))
-      return 0; /* do not respond to non-recursive queries */
+        return 0; /* do not respond to non-recursive queries */
     if (header[2] & 120)
-      return 0;
+        return 0;
     if (header[2] & 2)
-      return 0;
+        return 0;
     if (byte_diff (header + 4, 2, "\0\1"))
-      return 0;
+        return 0;
 
     pos = dns_packet_getname (buf, len, pos, q);
     if (!pos)
-      return 0;
+        return 0;
     pos = dns_packet_copy (buf, len, pos, qtype, 2);
     if (!pos)
-      return 0;
+        return 0;
     pos = dns_packet_copy (buf, len, pos, qclass, 2);
     if (!pos)
-      return 0;
+        return 0;
     if (byte_diff (qclass, 2, DNS_C_IN) && byte_diff (qclass, 2, DNS_C_ANY))
-      return 0;
+        return 0;
 
     byte_copy (id, 2, header);
 
@@ -841,7 +841,7 @@ main (int argc, char *argv[])
     }
 
     time (&t);
-    bzero (char_seed, sizeof (char_seed));
+    memset (char_seed, 0, sizeof (char_seed));
     strftime (char_seed, sizeof (char_seed), "%b-%d %Y %T", localtime (&t));
     fprintf (stderr, "\n");
     warnx ("version %s: starting: %s\n", VERSION, char_seed);
@@ -886,7 +886,7 @@ main (int argc, char *argv[])
     seed_addtime ();
     socket_tryreservein (udp53, 131072);
 
-    bzero (char_seed, sizeof (char_seed));
+    memset (char_seed, 0, sizeof (char_seed));
     for (i = 0, x = (char *)seed; i < sizeof (char_seed); i++, x++)
         char_seed[i] = *x;
     dns_random_init (char_seed);

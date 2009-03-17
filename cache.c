@@ -1,9 +1,33 @@
-#include "alloc.h"
-#include "byte.h"
-#include "uint32.h"
-#include "exit.h"
+/*
+ * cache.c: This file is part of the `djbdns' project, originally written
+ * by Dr. D J Bernstein and later released under public-domain since late
+ * December 2007 (http://cr.yp.to/distributors.html).
+ *
+ * I've modified this file for good and am releasing this new version under
+ * GNU General Public License.
+ * Copyright (C) 2009 Prasad J Pandit
+ *
+ * This program is a free software; you can redistribute it and/or modify
+ * it under the terms of GNU General Public License as published by Free
+ * Software Foundation; either version 2 of the license or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * of FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+ */
+
 #include "tai.h"
+#include "byte.h"
+#include "exit.h"
+#include "alloc.h"
 #include "cache.h"
+#include "uint32.h"
 
 uint64 cache_motion = 0;
 
@@ -43,165 +67,205 @@ Each entry contains the following information:
 #define MAXKEYLEN 1000
 #define MAXDATALEN 1000000
 
-static void cache_impossible(void)
+static void
+cache_impossible (void)
 {
-  _exit(111);
+    _exit (111);
 }
 
-static void set4(uint32 pos,uint32 u)
+static void
+set4 (uint32 pos, uint32 u)
 {
-  if (pos > size - 4) cache_impossible();
-  uint32_pack(x + pos,u);
+    if (pos > size - 4)
+        cache_impossible ();
+
+    uint32_pack (x + pos, u);
 }
 
-static uint32 get4(uint32 pos)
+static
+uint32 get4 (uint32 pos)
 {
-  uint32 result;
-  if (pos > size - 4) cache_impossible();
-  uint32_unpack(x + pos,&result);
-  return result;
+    uint32 result = 0;
+
+    if (pos > size - 4)
+        cache_impossible ();
+    uint32_unpack (x + pos, &result);
+
+    return result;
 }
 
-static unsigned int hash(const char *key,unsigned int keylen)
+static unsigned int
+hash (const char *key, unsigned int keylen)
 {
-  unsigned int result = 5381;
+    unsigned int result = 5381;
 
-  while (keylen) {
-    result = (result << 5) + result;
-    result ^= (unsigned char) *key;
-    ++key;
-    --keylen;
-  }
-  result <<= 2;
-  result &= hsize - 4;
-  return result;
-}
-
-char *cache_get(const char *key,unsigned int keylen,unsigned int *datalen,uint32 *ttl)
-{
-  struct tai expire;
-  struct tai now;
-  uint32 pos;
-  uint32 prevpos;
-  uint32 nextpos;
-  uint32 u;
-  unsigned int loop;
-  double d;
-
-  if (!x) return 0;
-  if (keylen > MAXKEYLEN) return 0;
-
-  prevpos = hash(key,keylen);
-  pos = get4(prevpos);
-  loop = 0;
-
-  while (pos) {
-    if (get4(pos + 4) == keylen) {
-      if (pos + 20 + keylen > size) cache_impossible();
-      if (byte_equal(key,keylen,x + pos + 20)) {
-        tai_unpack(x + pos + 12,&expire);
-        tai_now(&now);
-        if (tai_less(&expire,&now)) return 0;
-
-        tai_sub(&expire,&expire,&now);
-        d = tai_approx(&expire);
-        if (d > 604800) d = 604800;
-        *ttl = d;
-
-        u = get4(pos + 8);
-        if (u > size - pos - 20 - keylen) cache_impossible();
-        *datalen = u;
-
-        return x + pos + 20 + keylen;
-      }
+    while (keylen)
+    {
+        result = (result << 5) + result;
+        result ^= (unsigned char) *key;
+        ++key;
+        --keylen;
     }
-    nextpos = prevpos ^ get4(pos);
-    prevpos = pos;
-    pos = nextpos;
-    if (++loop > 100) return 0; /* to protect against hash flooding */
-  }
+    result <<= 2;
+    result &= hsize - 4;
 
-  return 0;
+    return result;
 }
 
-void cache_set(const char *key,unsigned int keylen,const char *data,unsigned int datalen,uint32 ttl)
+char *
+cache_get (const char *key, unsigned int keylen,
+                            unsigned int *datalen, uint32 *ttl)
 {
-  struct tai now;
-  struct tai expire;
-  unsigned int entrylen;
-  unsigned int keyhash;
-  uint32 pos;
+    struct tai now;
+    struct tai expire;
 
-  if (!x) return;
-  if (keylen > MAXKEYLEN) return;
-  if (datalen > MAXDATALEN) return;
+    uint32 u = 0, pos = 0;
+    uint32 prevpos = 0, nextpos = 0;
 
-  if (!ttl) return;
-  if (ttl > 604800) ttl = 604800;
+    double d = 0.0;
+    unsigned int loop = 0;
 
-  entrylen = keylen + datalen + 20;
+    if (!x)
+        return 0;
+    if (keylen > MAXKEYLEN)
+        return 0;
 
-  while (writer + entrylen > oldest) {
-    if (oldest == unused) {
-      if (writer <= hsize) return;
-      unused = writer;
-      oldest = hsize;
-      writer = hsize;
+    prevpos = hash (key, keylen);
+    pos = get4 (prevpos);
+
+    while (pos)
+    {
+        if (get4(pos + 4) == keylen)
+        {
+            if (pos + 20 + keylen > size)
+                cache_impossible ();
+            if (byte_equal (key, keylen, x + pos + 20))
+            {
+                tai_unpack (x + pos + 12, &expire);
+                tai_now (&now);
+                if (tai_less (&expire, &now))
+                    return 0;
+
+                tai_sub (&expire, &expire, &now);
+                d = tai_approx (&expire);
+                if (d > 604800)
+                    d = 604800;
+                *ttl = d;
+
+                u = get4 (pos + 8);
+                if (u > size - pos - 20 - keylen)
+                    cache_impossible ();
+                *datalen = u;
+
+                return x + pos + 20 + keylen;
+            }
+        }
+        nextpos = prevpos ^ get4 (pos);
+        prevpos = pos;
+        pos = nextpos;
+        if (++loop > 100)
+            return 0; /* to protect against hash flooding */
     }
 
-    pos = get4(oldest);
-    set4(pos,get4(pos) ^ oldest);
-  
-    oldest += get4(oldest + 4) + get4(oldest + 8) + 20;
-    if (oldest > unused) cache_impossible();
-    if (oldest == unused) {
-      unused = size;
-      oldest = size;
-    }
-  }
-
-  keyhash = hash(key,keylen);
-
-  tai_now(&now);
-  tai_uint(&expire,ttl);
-  tai_add(&expire,&expire,&now);
-
-  pos = get4(keyhash);
-  if (pos)
-    set4(pos,get4(pos) ^ keyhash ^ writer);
-  set4(writer,pos ^ keyhash);
-  set4(writer + 4,keylen);
-  set4(writer + 8,datalen);
-  tai_pack(x + writer + 12,&expire);
-  byte_copy(x + writer + 20,keylen,key);
-  byte_copy(x + writer + 20 + keylen,datalen,data);
-
-  set4(keyhash,writer);
-  writer += entrylen;
-  cache_motion += entrylen;
+    return 0;
 }
 
-int cache_init(unsigned int cachesize)
+void
+cache_set (const char *key, unsigned int keylen,
+                            const char *data, unsigned int datalen, uint32 ttl)
 {
-  if (x) {
-    alloc_free(x);
-    x = 0;
-  }
+    uint32 pos = 0;
+    struct tai now;
+    struct tai expire;
 
-  if (cachesize > 1000000000) cachesize = 1000000000;
-  if (cachesize < 100) cachesize = 100;
-  size = cachesize;
+    unsigned int keyhash = 0;
+    unsigned int entrylen = 0;
 
-  hsize = 4;
-  while (hsize <= (size >> 5)) hsize <<= 1;
+    if (!x)
+      return;
+    if (keylen > MAXKEYLEN)
+        return;
+    if (datalen > MAXDATALEN)
+        return;
 
-  x = alloc(size);
-  if (!x) return 0;
-  byte_zero(x,size);
+    if (!ttl)
+        return;
+    if (ttl > 604800)
+        ttl = 604800;
 
-  writer = hsize;
-  oldest = size;
-  unused = size;
+    entrylen = keylen + datalen + 20;
 
-  return 1;
+    while (writer + entrylen > oldest)
+    {
+        if (oldest == unused)
+        {
+            if (writer <= hsize)
+                return;
+            unused = writer;
+            oldest = hsize;
+            writer = hsize;
+        }
+
+        pos = get4 (oldest);
+        set4 (pos, get4 (pos) ^ oldest);
+
+        oldest += get4 (oldest + 4) + get4 (oldest + 8) + 20;
+        if (oldest > unused)
+            cache_impossible ();
+        if (oldest == unused)
+        {
+            unused = size;
+            oldest = size;
+        }
+    }
+
+    keyhash = hash (key,keylen);
+
+    tai_now (&now);
+    tai_uint (&expire, ttl);
+    tai_add (&expire, &expire, &now);
+
+    pos = get4 (keyhash);
+    if (pos)
+        set4 (pos, get4 (pos) ^ keyhash ^ writer);
+
+    set4 (writer, pos ^ keyhash);
+    set4 (writer + 4, keylen);
+    set4 (writer + 8, datalen);
+    tai_pack (x + writer + 12, &expire);
+    byte_copy (x + writer + 20, keylen, key);
+    byte_copy (x + writer + 20 + keylen, datalen, data);
+
+    set4 (keyhash,writer);
+    writer += entrylen;
+    cache_motion += entrylen;
+}
+
+int
+cache_init (unsigned int cachesize)
+{
+    if (x)
+    {
+        alloc_free (x);
+        x = 0;
+    }
+
+    if (cachesize > 1000000000)
+        cachesize = 1000000000;
+    if (cachesize < 100)
+        cachesize = 100;
+    size = cachesize;
+
+    hsize = 4;
+    while (hsize <= (size >> 5))
+        hsize <<= 1;
+
+    if (!(x = alloc (size)))
+        return 0;
+
+    writer = hsize;
+    oldest = size;
+    unused = size;
+
+    return 1;
 }
