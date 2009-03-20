@@ -3,7 +3,7 @@
 #include "dd.h"
 #include "response.h"
 
-short mode = 0;
+short debug_level = 0;
 
 const char *fatal = "walldns: fatal: ";
 const char *starting = "starting walldns\n";

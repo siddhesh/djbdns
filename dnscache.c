@@ -42,8 +42,8 @@
 #define PIDFILE "/var/run/dnscache.pid"
 #define CFGFILE SYSCONFDIR"/djbdns/dnscache.conf"
 
-short mode = 0;
-char *prog = NULL, debug_level = 0;
+char *prog = NULL;
+short mode = 0, debug_level = 0;
 
 enum op_mode { DAEMON = 1, DEBUG = 2 };
 
@@ -499,8 +499,8 @@ doit (void)
             if (t[j].active)
             {
                 t[j].io = io + iolen++;
-	            if (t[j].state == 0)
-	                query_io (&t[j].q, t[j].io, &deadline);
+                if (t[j].state == 0)
+                    query_io (&t[j].q, t[j].io, &deadline);
                 else
                 {
                     if (taia_less (&t[j].timeout, &deadline))
@@ -524,7 +524,7 @@ doit (void)
                     u_respond (j);
             }
         }
-        for (j = 0;j < MAXTCP;++j)
+        for (j = 0; j < MAXTCP; ++j)
         {
             if (t[j].active)
             {
@@ -539,8 +539,8 @@ doit (void)
                         t_respond (j);
                 }
                 else
-                    if (t[j].io->revents || taia_less(&t[j].timeout,&stamp))
-                        t_rw(j);
+                    if (t[j].io->revents || taia_less (&t[j].timeout, &stamp))
+                        t_rw (j);
             }
         }
 
@@ -707,7 +707,7 @@ read_conf (const char *file)
                 errx (-1, "%s: %d: unknown variable `%s'", file, lcount, key);
 
             val = strtrim (strtok (NULL, "="));
-            if (mode & DEBUG)
+            if (debug_level)
                 warnx ("%s: %s", key, val);
 
             if (val)

@@ -118,7 +118,7 @@ ttlget (char buf[4])
 }
 
 
-static void 
+static void
 cleanup (struct query *z)
 {
     int j = 0, k = 0;
@@ -213,7 +213,7 @@ smaller (char *buf, unsigned int len, unsigned int pos1, unsigned int pos2)
     if (len1 > len2)
         return 0;
 
-    r = case_diffb(t1,len1,t2);
+    r = case_diffb (t1, len1, t2);
     if (r < 0)
         return 1;
     if (r > 0)
@@ -332,7 +332,7 @@ NEWNAME:
         cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
         if (cached)
         {
-            log_cachednxdomain(d);
+            log_cachednxdomain (d);
             goto NXDOMAIN;
         }
 
@@ -340,7 +340,7 @@ NEWNAME:
         cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
         if (cached)
         {
-            if (typematch(DNS_T_CNAME,dtype))
+            if (typematch (DNS_T_CNAME, dtype))
             {
                 log_cachedanswer (d, DNS_T_CNAME);
                 if (!rqa (z))
@@ -358,7 +358,7 @@ NEWNAME:
             goto CNAME;
         }
 
-        if (typematch(DNS_T_NS,dtype))
+        if (typematch (DNS_T_NS, dtype))
         {
             byte_copy (key, 2, DNS_T_NS);
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
@@ -375,6 +375,7 @@ NEWNAME:
                         goto DIE;
                     if (!response_addname (t2))
                         goto DIE;
+
                     response_rfinish (RESPONSE_ANSWER);
                 }
                 cleanup (z);
@@ -392,6 +393,7 @@ NEWNAME:
                 log_cachedanswer (d, DNS_T_PTR);
                 if (!rqa (z))
                     goto DIE;
+
                 pos = 0;
                 while (pos = dns_packet_getname (cached, cachedlen, pos, &t2))
                 {
@@ -399,6 +401,7 @@ NEWNAME:
                         goto DIE;
                     if (!response_addname (t2))
                         goto DIE;
+
                     response_rfinish (RESPONSE_ANSWER);
                 }
                 cleanup(z);
@@ -429,6 +432,7 @@ NEWNAME:
                         goto DIE;
                     if (!response_addname (t2))
                         goto DIE;
+
                     response_rfinish (RESPONSE_ANSWER);
                 }
                 cleanup (z);
@@ -495,7 +499,7 @@ NEWNAME:
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
             if (cached && (cachedlen || byte_diff (dtype, 2, DNS_T_ANY)))
             {
-                log_cachedanswer (d,dtype);
+                log_cachedanswer (d, dtype);
                 if (!rqa (z))
                     goto DIE;
                 while (cachedlen >= 2)
@@ -545,14 +549,16 @@ NEWNAME:
                     for (j = 0; j < QUERY_MAXNS; ++j)
                         dns_domain_free (&z->ns[z->level][j]);
 
-                    j = 0;
+                    j = pos = 0;
                     pos = dns_packet_getname (cached, cachedlen, pos, &t1);
                     while (pos)
                     {
                         log_cachedns (d, t1);
                         if (j < QUERY_MAXNS)
-                            if (!dns_domain_copy (&z->ns[z->level][j++],t1))
+                            if (!dns_domain_copy (&z->ns[z->level][j++], t1))
                                 goto DIE;
+
+                        pos = dns_packet_getname (cached, cachedlen, pos, &t1);
                     }
                     break;
                 }
@@ -659,7 +665,7 @@ HAVEPACKET:
 
         if (dns_domain_equal (t1, d))
         {
-            if (byte_equal(header + 2,2,DNS_C_IN))
+            if (byte_equal (header + 2, 2, DNS_C_IN))
             {
                 /* should always be true */
                 if (typematch (header, dtype))
@@ -673,7 +679,7 @@ HAVEPACKET:
                 }
             }
         }
-        uint16_unpack_big(header + 8,&datalen);
+        uint16_unpack_big (header + 8, &datalen);
         pos += datalen;
     }
     posauthority = pos;
@@ -712,7 +718,7 @@ HAVEPACKET:
             || !dns_domain_suffix (referral, control))
         {
             log_lame (whichserver, control, referral);
-            byte_zero(whichserver, 4);
+            byte_zero (whichserver, 4);
 
             goto HAVENS;
         }
@@ -720,7 +726,7 @@ HAVEPACKET:
 
     if (records)
     {
-        alloc_free(records);
+        alloc_free (records);
         records = 0;
     }
 
@@ -927,11 +933,14 @@ HAVEPACKET:
                     goto DIE;
                 if (byte_equal (header + 8, 2, "\0\4"))
                 {
+                    extern short debug_level;
                     pos = dns_packet_copy (buf, len, pos, header, 4);
                     if (!pos)
                         goto DIE;
                     save_data (header, 4);
-                    log_rr (whichserver, t1, DNS_T_A, header, 4, ttl);
+
+                /*  if (debug_level > 2)  */
+                        log_rr (whichserver, t1, DNS_T_A, header, 4, ttl);
                 }
                 ++i;
             }
@@ -942,6 +951,8 @@ HAVEPACKET:
             save_start ();
             while (i < j)
             {
+                extern short debug_level;
+
                 pos = dns_packet_skipname (buf, len, records[i]);
                 if (!pos)
                     goto DIE;
@@ -953,14 +964,18 @@ HAVEPACKET:
                     goto DIE;
                 save_data (header + 8, 2);
                 save_data (buf + pos, datalen);
-                log_rr (whichserver, t1, type, buf + pos, datalen, ttl);
+
+            /*  if (debug_level > 2)    */
+                    log_rr (whichserver, t1, type, buf + pos, datalen, ttl);
+
                 ++i;
             }
-            save_finish(type,t1,ttl);
+            save_finish (type, t1, ttl);
         }
         i = j;
     }
-    alloc_free(records); records = 0;
+    alloc_free (records);
+    records = 0;
 
     if (flagcname)
     {
@@ -996,7 +1011,7 @@ NXDOMAIN:
             goto LOWERLEVEL;
         if (!rqa (z))
             goto DIE;
-        
+
         response_nxdomain ();
         cleanup (z);
 
@@ -1006,7 +1021,7 @@ NXDOMAIN:
     if (!flagout && flagsoa)
         if (byte_diff (DNS_T_ANY, 2, dtype))
             if (byte_diff (DNS_T_AXFR, 2, dtype))
-                if (byte_diff(DNS_T_CNAME, 2, dtype))
+                if (byte_diff (DNS_T_CNAME, 2, dtype))
                 {
                     save_start ();
                     save_finish (dtype, d, soattl);
@@ -1031,8 +1046,8 @@ NXDOMAIN:
                 uint16_unpack_big (header + 8, &datalen);
                 if (dns_domain_equal (t1, d))
                     if (typematch (header, DNS_T_A))
-                            /* should always be true */
                         if (byte_equal (header + 2, 2, DNS_C_IN))
+                            /* should always be true */
                             if (datalen == 4)
                                 for (k = 0; k < 64; k += 4)
                                 {
@@ -1066,14 +1081,13 @@ NXDOMAIN:
             uint16_unpack_big (header + 8, &datalen);
             if (dns_domain_equal (t1, d))
             {
-                /* should always be true */
                 if (byte_equal (header + 2, 2, DNS_C_IN))
-                {
+                {   /* should always be true */
                     if (typematch (header, dtype))
                     {
                         if (!response_rstart (t1, header, ttl))
                             goto DIE;
-      
+
                         if (typematch (header, DNS_T_NS)
                             || typematch (header, DNS_T_CNAME)
                             || typematch (header, DNS_T_PTR))
@@ -1113,7 +1127,7 @@ NXDOMAIN:
                             if (!response_addbytes (misc, 20))
                                 goto DIE;
                         }
-                        else 
+                        else
                         {
                             if (pos + datalen > len)
                                 goto DIE;
@@ -1208,7 +1222,7 @@ query_start (struct query *z, char *dn, char type[2],
     byte_copy (z->class, 2, class);
     byte_copy (z->localip, 4, localip);
 
-    return doit (z,0);
+    return doit (z, 0);
 }
 
 int

@@ -1,3 +1,26 @@
+Mar 20 2009 pjp <prasad@redhat.com>
+
+	* Makefile.am: did append "version.h" to the dependencies of the targets
+	  that required it.
+
+	* byte_diff.c: did format it as per my taste of coding style.
+
+	* query.c: Fixed a small bug I mistakenly introduced while formatting this
+	  file. I removed a `pos = 0;' statement from line 552, thinking that pos
+	  is getting initialised in the next statement, but that stopped dnscache
+	  from processing `cname' type records and thus resolving names. It took me
+	  whole day to figure that out. Anyway...lesson learned. :)
+
+	* dnscache.c:
+	  droproot.c:
+	  pickdns.c:
+	  rbldns.c:
+	  tinydns.c:
+	  walldns.c: Did add 'extern short debug_level' declaration to all these
+	  files.
+
+	* version.h: version changed to 1.05.2, not yet released though.
+
 Mar 17 2009 pjp <prasad@redhat.com>
 
 	* Makefile.am: changed to install `dnsip' command.

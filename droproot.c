@@ -31,8 +31,7 @@
 #include "prot.h"
 #include "strerr.h"
 
-extern short mode;
-enum op_mode { DEBUG = 2 };
+extern short debug_level;
 
 void
 droproot (const char *fatal)
@@ -48,7 +47,7 @@ droproot (const char *fatal)
     if (chroot(".") == -1)
         err (-1, "could not change root directory to `%s'", x);
 
-    if (mode & DEBUG)
+    if (debug_level)
         warnx ("root & working directory changed to `%s'", x);
 
     x = env_get ("GID");
@@ -65,6 +64,6 @@ droproot (const char *fatal)
     if (prot_uid ((int) id) == -1)
         err (-1, "could not set user-id to `%ld'", id);
 
-    if (mode & DEBUG)
+    if (debug_level)
         warnx ("root privileges dropped, user-id set to `%ld'", id);
 }

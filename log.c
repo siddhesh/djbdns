@@ -84,10 +84,18 @@ space (void)
 static void
 ip (const char i[4])
 {
-    hex (i[0]);
+/*  hex (i[0]);
     hex (i[1]);
     hex (i[2]);
-    hex (i[3]);
+    hex (i[3]); */
+
+    number ((int)(i[0] & 0xFF));
+    string (".");
+    number ((int)(i[1] & 0xFF));
+    string (".");
+    number ((int)(i[2] & 0xFF));
+    string (".");
+    number ((int)(i[3] & 0xFF));
 }
 
 static void

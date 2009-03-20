@@ -22,7 +22,7 @@
 #include "qlog.h"
 #include "response.h"
 
-short mode = 0;
+short debug_level = 0;
 extern int respond(char *,char *,char *);
 
 #define FATAL "axfrdns: fatal: "

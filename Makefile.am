@@ -53,7 +53,7 @@ djbdns: djbdns.sh
 dnscache_SOURCES = dnscache.c droproot.c okclient.c log.c cache.c query.c \
 	response.c dd.c roots.c iopause.c prot.c \
 	response.h select.h prot.h roots.h query.h cache.h log.h okclient.h \
-	dd.h direntry.h hasshsgr.h
+	dd.h direntry.h hasshsgr.h version.h
 dnscache_LDADD = libdns.a libenv.a liballoc.a libbuffer.a libtai.a \
 	libunix.a libbyte.a
 
@@ -68,7 +68,7 @@ dnsfilter_SOURCES = dnsfilter.c iopause.c select.h
 dnsfilter_LDADD = libgetopt.a libdns.a libenv.a libtai.a liballoc.a \
 	libbuffer.a libunix.a libbyte.a
 
-dnsip_SOURCES = dnsip.c iopause.c select.h
+dnsip_SOURCES = dnsip.c iopause.c select.h version.h
 dnsip_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 

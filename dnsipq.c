@@ -1,21 +1,22 @@
-#include "buffer.h"
-#include "exit.h"
-#include "strerr.h"
+#include <err.h>
+#include <stdlib.h>
+
 #include "ip4.h"
 #include "dns.h"
+#include "buffer.h"
+#include "strerr.h"
 
-#define FATAL "dnsipq: fatal: "
-
+char str[IP4_FMT];
 static char seed[128];
 
 static stralloc in;
-static stralloc fqdn;
 static stralloc out;
-char str[IP4_FMT];
+static stralloc fqdn;
 
-int main(int argc,char **argv)
+int
+main (int argc,char *argv[])
 {
-  int i;
+  int i = 0;
 
   dns_random_init(seed);
 

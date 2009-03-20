@@ -6,7 +6,7 @@
 #include "cdb.h"
 #include "response.h"
 
-short mode = 0;
+short debug_level = 0;
 
 const char *fatal = "pickdns: fatal: ";
 const char *starting = "starting pickdns\n";

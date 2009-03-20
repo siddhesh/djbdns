@@ -1,6 +1,6 @@
 #include "dns.h"
 
-short mode = 0;
+short debug_level = 0;
 
 const char *fatal = "tinydns: fatal: ";
 const char *starting = "starting tinydns\n";
