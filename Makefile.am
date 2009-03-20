@@ -16,17 +16,17 @@ AM_CFLAGS=-g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 
 SUBDIRS = etc
 
-bin_PROGRAMS = dnscache dnsip
+bin_PROGRAMS = dnscache dnsip dnsipq dnsq
 noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf \
-	dnsfilter dnsipq dnsmx dnsname dnsq dnsqr dnstrace \
+	dnsfilter dnsmx dnsname dnsqr dnstrace \
 	dnstxt pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf \
 	rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get \
 	walldns walldns-conf
 
 bin_SCRIPTS = djbdns dnstracesort
 
-noinst_MANS = dnscache.ms
-nodist_man1_MANS = dnscache.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1
 
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
@@ -72,6 +72,9 @@ dnsip_SOURCES = dnsip.c iopause.c select.h version.h
 dnsip_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
+dnsip.1: dnsip.ms
+	cp dnsip.ms dnsip.1
+
 dnsipq_SOURCES = dnsipq.c iopause.c select.h
 dnsipq_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
@@ -88,6 +91,9 @@ dnsq_SOURCES = dnsq.c iopause.c printrecord.c printpacket.c parsetype.c \
 	select.h printpacket.h parsetype.h printrecord.h
 dnsq_LDADD = libdns.a libenv.a libtai.a libbuffer.a liballoc.a \
 	libunix.a libbyte.a
+
+dnsq.1: dnsq.ms
+	cp dnsq.ms dnsq.1
 
 dnsqr_SOURCES = dnsqr.c iopause.c printrecord.c printpacket.c parsetype.c \
 	select.h printpacket.h parsetype.h printrecord.h

@@ -34,16 +34,17 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = dnscache$(EXEEXT) dnsip$(EXEEXT)
+bin_PROGRAMS = dnscache$(EXEEXT) dnsip$(EXEEXT) dnsipq$(EXEEXT) \
+	dnsq$(EXEEXT)
 noinst_PROGRAMS = axfrdns$(EXEEXT) axfrdns-conf$(EXEEXT) \
 	axfr-get$(EXEEXT) dnscache-conf$(EXEEXT) dnsfilter$(EXEEXT) \
-	dnsipq$(EXEEXT) dnsmx$(EXEEXT) dnsname$(EXEEXT) dnsq$(EXEEXT) \
-	dnsqr$(EXEEXT) dnstrace$(EXEEXT) dnstxt$(EXEEXT) \
-	pickdns$(EXEEXT) pickdns-conf$(EXEEXT) pickdns-data$(EXEEXT) \
-	random-ip$(EXEEXT) rbldns$(EXEEXT) rbldns-conf$(EXEEXT) \
-	rbldns-data$(EXEEXT) tinydns$(EXEEXT) tinydns-conf$(EXEEXT) \
-	tinydns-data$(EXEEXT) tinydns-edit$(EXEEXT) \
-	tinydns-get$(EXEEXT) walldns$(EXEEXT) walldns-conf$(EXEEXT)
+	dnsmx$(EXEEXT) dnsname$(EXEEXT) dnsqr$(EXEEXT) \
+	dnstrace$(EXEEXT) dnstxt$(EXEEXT) pickdns$(EXEEXT) \
+	pickdns-conf$(EXEEXT) pickdns-data$(EXEEXT) random-ip$(EXEEXT) \
+	rbldns$(EXEEXT) rbldns-conf$(EXEEXT) rbldns-data$(EXEEXT) \
+	tinydns$(EXEEXT) tinydns-conf$(EXEEXT) tinydns-data$(EXEEXT) \
+	tinydns-edit$(EXEEXT) tinydns-get$(EXEEXT) walldns$(EXEEXT) \
+	walldns-conf$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
@@ -451,8 +452,8 @@ AM_CFLAGS = -g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 
 SUBDIRS = etc
 bin_SCRIPTS = djbdns dnstracesort
-noinst_MANS = dnscache.ms
-nodist_man1_MANS = dnscache.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
@@ -1505,6 +1506,12 @@ djbdns: djbdns.sh
 
 dnscache.1: dnscache.ms
 	sed -e 's:PREFIX:${sysconfdir}:' dnscache.ms > dnscache.1
+
+dnsip.1: dnsip.ms
+	cp dnsip.ms dnsip.1
+
+dnsq.1: dnsq.ms
+	cp dnsq.ms dnsq.1
 
 dnstracesort: dnstracesort.sh
 	cp dnstracesort.sh dnstracesort

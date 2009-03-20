@@ -1,4 +1,16 @@
 Mar 20 2009 pjp <prasad@redhat.com>
+	
+	* dnsq.c: 
+	  dnsip.c:
+	  parsetype.c: Files edited to support few command line options and are
+	  formatted to suit my coding style. Also the copyright disclaimer added
+	  to the top.
+
+	* dnsip.ms: new manuscript file added for dnsip.1. Manual page for dnsip
+	  command.
+
+	* dnsq.ms: new manuscript file added for dnsq.1. Manual page for dnsq
+	  command.
 
 	* Makefile.am: did append "version.h" to the dependencies of the targets
 	  that required it.

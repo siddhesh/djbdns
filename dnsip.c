@@ -56,7 +56,7 @@ void
 printh (void)
 {
     usage ();
-    printf ("\n Options: \n");
+    printf ("\n Options:\n");
     printf ("%-17s %s\n", "    -h --help", "print this help");
     printf ("%-17s %s\n", "    -n --new", "use new output style");
     printf ("%-17s %s\n", "    -v --version", "print version information");

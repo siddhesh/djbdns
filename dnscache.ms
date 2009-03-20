@@ -8,7 +8,7 @@
 .nr HY 0
 
 .TH dnscache 1
-dnscache-1.05.1 - djbdns DNS cache daemon.
+dnscache - djbdns DNS cache daemon.
 
 .SH SYNOPSYS
 .TP 5
