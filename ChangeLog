@@ -1,35 +1,41 @@
+Mar 23 2009 pjp <prasad@redhat.com>
+
+	* Released the second version djbdns-1.05.2 that includes all the
+	  changes done so far.
+
 Mar 20 2009 pjp <prasad@redhat.com>
 	
 	* dnsq.c: 
 	  dnsip.c:
-	  parsetype.c: Files edited to support few command line options and are
-	  formatted to suit my coding style. Also the copyright disclaimer added
-	  to the top.
+	  parsetype.c: Files edited to support few command line options and
+	  are formatted to suit my coding style. Also the copyright disclaimer
+	  added to the top.
 
-	* dnsip.ms: new manuscript file added for dnsip.1. Manual page for dnsip
-	  command.
+	* dnsip.ms: new manuscript file added for dnsip.1. Manual page for
+	  dnsip command.
 
-	* dnsq.ms: new manuscript file added for dnsq.1. Manual page for dnsq
-	  command.
+	* dnsq.ms: new manuscript file added for dnsq.1. Manual page for
+	  dnsq command.
 
-	* Makefile.am: did append "version.h" to the dependencies of the targets
-	  that required it.
+	* Makefile.am: did append "version.h" to the dependencies of the
+	  targets that required it.
 
 	* byte_diff.c: did format it as per my taste of coding style.
 
-	* query.c: Fixed a small bug I mistakenly introduced while formatting this
-	  file. I removed a `pos = 0;' statement from line 552, thinking that pos
-	  is getting initialised in the next statement, but that stopped dnscache
-	  from processing `cname' type records and thus resolving names. It took me
-	  whole day to figure that out. Anyway...lesson learned. :)
+	* query.c: Fixed a small bug I mistakenly introduced while formatting
+	  this file. I removed a `pos = 0;' statement from line 552, thinking
+	  that pos is getting initialised in the next statement, but that
+	  stopped dnscache from processing `cname' type records and thus
+	  resolving names. It took me whole day to figure that out.
+	  Anyway...lesson learned. :)
 
 	* dnscache.c:
 	  droproot.c:
 	  pickdns.c:
 	  rbldns.c:
 	  tinydns.c:
-	  walldns.c: Did add 'extern short debug_level' declaration to all these
-	  files.
+	  walldns.c: Did add 'extern short debug_level' declaration to all
+	  these files.
 
 	* version.h: version changed to 1.05.2, not yet released though.
 
@@ -96,11 +102,12 @@ Mar 13 2009 pjp <prasad@redhat.com>
 
 	* COPYING: changed to GPL version 2, instead of version 3.
 
-	* dnscache.c: automatic local variable named `mode' renamed to `perm' in
-	  couple of functions as there is already a global variable named mode.
+	* dnscache.c: automatic local variable named `mode' renamed to `perm'
+	  in couple of functions as there is already a global variable named
+	  mode.
 
-	* readme.ms: changed to reference a web-link wherein DJB put his work in
-	  public-domain. Obviously, the same goes to README.
+	* readme.ms: changed to reference a web-link wherein DJB put his work
+	  in public-domain. Obviously, the same goes to README.
 
 Mar  3 2009 pjp <prasad@redhat.com>
 
@@ -141,12 +148,12 @@ Mar  3 2009 pjp <prasad@redhat.com>
 
 		http://cr.yp.to/djbdns.html
 	
-	  and aim is to free it from the daemon of `daemontools', make it as much
-	  independent & concise as possible and thus more usable and maintainable.
+	  and aim is to free it from the daemon of `daemontools', make it as
+	  much independent & concise as possible and thus more usable and
+	  maintainable.
 
 
 -------------------------------------------------------------------------------
-
 19991129
 	version: dnscache 0.50, alpha. not released yet.
 19991223

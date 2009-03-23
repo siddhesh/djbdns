@@ -15,7 +15,7 @@
 
 
 .DS C
-djbdns-1.05.1
+djbdns-1.05.2
 =============
 .DE
 
@@ -23,7 +23,7 @@ djbdns-1.05.1
 Hello all,
 
 .PP
-I am pleased to release this *new* version of djbdns-1.05.1. Djbdns is a
+I am pleased to release this *new* version of djbdns-1.05.2. Djbdns is a
 fully-fledged Domain Name System(DNS), originally written by the eminent
 author of qmail, Dr. D J Bernstein. This new release is a complete makeover
 to the original source(djbdns-1.05) and is meant to make life a lot more

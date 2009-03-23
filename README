@@ -2,7 +2,7 @@
 
 
 
-                                 djbdns-1.05.1
+                                 djbdns-1.05.2
                                  =============
 
 
@@ -10,7 +10,7 @@
           Hello all,
 
                I   am   pleased  to  release  this  *new*  version  of
-          djbdns-1.05.1.  Djbdns  is  a  fully-fledged   Domain   Name
+          djbdns-1.05.2.  Djbdns  is  a  fully-fledged   Domain   Name
           System(DNS),  originally  written  by  the eminent author of
           qmail, Dr. D J Bernstein. This new  release  is  a  complete
           makeover to the original source(djbdns-1.05) and is meant to
@@ -18,10 +18,10 @@
           are  in  the  set-up  &  configuration  steps.  The original
           source is in public-domain since late Dec 2007.
 
-               Please see: http://cr.yp.to/distributors.html
+              Please see: http://cr.yp.to/distributors.html
 
           Nevertheless, this new release is distributed under the  GNU
-          General  Public  Licence  for  good. See ChangeLog  for more
+          General  Public  Licence  for  good.  See ChangeLog for more
           details.
 
           Installation:
@@ -33,6 +33,7 @@
                sh>$ make
                sh># make install
 
+
           Once installed, On Linux  machines  add  ‘dnscache’  to  the
           system  services by following steps. Note that, if you chose
           a different install prefix with ‘--prefix’  use  that  while
@@ -42,11 +43,14 @@
                sh># chkconfig --add djbdns
                sh># chkconfig --list djbdns
 
+
           Now you can start the service by
+
 
                sh># service djbdns start
                         OR
                sh># dnscache -D
+
 
           Consult the dnscahce(1) manual page for more help.
 
@@ -61,6 +65,6 @@
 
 
 
-          Thank you!
 
+          Thank you!
 
