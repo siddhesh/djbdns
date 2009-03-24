@@ -22,9 +22,10 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include <stdlib.h>
+
 #include "tai.h"
 #include "byte.h"
-#include "exit.h"
 #include "alloc.h"
 #include "cache.h"
 #include "uint32.h"
@@ -70,7 +71,7 @@ Each entry contains the following information:
 static void
 cache_impossible (void)
 {
-    _exit (111);
+    exit (111);
 }
 
 static void

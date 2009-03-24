@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <pwd.h>
 #include "strerr.h"
-#include "exit.h"
 #include "auto_home.h"
 #include "generic-conf.h"
 
@@ -54,5 +53,5 @@ int main(int argc,char **argv)
   makedir("root");
   perm(02755);
 
-  _exit(0);
+    return 0;
 }

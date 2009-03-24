@@ -3,7 +3,6 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include "buffer.h"
-#include "exit.h"
 #include "cdb_make.h"
 #include "open.h"
 #include "stralloc.h"
@@ -124,5 +123,5 @@ int main()
   if (rename("data.tmp","data.cdb") == -1)
     strerr_die2sys(111,FATAL,"unable to move data.tmp to data.cdb: ");
 
-  _exit(0);
+    return 0;
 }

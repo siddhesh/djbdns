@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
+
 #include "uint32.h"
 #include "uint16.h"
 #include "stralloc.h"
@@ -7,7 +9,6 @@
 #include "strerr.h"
 #include "getln.h"
 #include "buffer.h"
-#include "exit.h"
 #include "open.h"
 #include "scan.h"
 #include "byte.h"
@@ -327,7 +328,7 @@ int main(int argc,char **argv)
 
   if (oldserial && newserial) /* allow 0 for very recently modified zones */
     if (oldserial == newserial) /* allow serial numbers to move backwards */
-      _exit(0);
+      exit (0);
 
 
   fd = open_trunc(fntmp);
@@ -369,5 +370,5 @@ int main(int argc,char **argv)
   if (close(fd) == -1) die_write(); /* NFS dorks */
   if (rename(fntmp,fn) == -1)
     strerr_die6sys(111,FATAL,"unable to move ",fntmp," to ",fn,": ");
-  _exit(0);
+  exit (0);
 }

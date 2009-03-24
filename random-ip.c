@@ -1,5 +1,4 @@
 #include "buffer.h"
-#include "exit.h"
 #include "fmt.h"
 #include "scan.h"
 #include "dns.h"
@@ -74,7 +73,7 @@ int main(int argc,char **argv)
     buffer_put(buffer_1,strnum,fmt_ulong(strnum,u));
     buffer_puts(buffer_1,"\n");
   }
-
   buffer_flush(buffer_1);
-  _exit(0);
+
+    return 0;
 }

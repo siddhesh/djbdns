@@ -1,7 +1,6 @@
 #include "str.h"
 #include "byte.h"
 #include "scan.h"
-#include "exit.h"
 #include "stralloc.h"
 #include "buffer.h"
 #include "strerr.h"
@@ -72,5 +71,6 @@ int main(int argc,char **argv)
 
   DONE:
   buffer_putflush(buffer_1,out.s,out.len);
-  _exit(0);
+
+  return 0;
 }

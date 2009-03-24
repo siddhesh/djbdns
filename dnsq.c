@@ -170,7 +170,7 @@ main (int argc,char **argv)
         exit (-1);
     }
     if (!dns_domain_fromdot (&q, *argv, str_len (*argv)))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
 
     if (!*++argv)
     {
@@ -178,37 +178,37 @@ main (int argc,char **argv)
         exit (-1);
     }
     if (!stralloc_copys (&out, *argv))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
     if (dns_ip4_qualify (&ip, &fqdn, &out) == -1)
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
     if (ip.len >= 64)
         ip.len = 64;
 
     byte_zero (servers, 64);
     byte_copy (servers, ip.len, ip.s);
     if (!stralloc_copys (&out, ""))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
 
     uint16_unpack_big (type, &u16);
     if (!stralloc_catulong0 (&out, u16, 0))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
     if (!stralloc_cats (&out, " "))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
     if (!dns_domain_todot_cat (&out, q))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
     if (!stralloc_cats (&out, ":\n"))
-        err (-1, "could not parse");
+        errx (-1, "could not parse");
 
     if (resolve (q, type, servers) == -1)
     {
         if (!stralloc_cats (&out, error_str (errno)))
-            err (-1, "could not parse");
+            errx (-1, "could not parse");
         if (!stralloc_cats (&out, "\n"))
-            err (-1, "could not parse");
+            errx (-1, "could not parse");
     }
     else
         if (!printpacket_cat (&out, tx.packet, tx.packetlen))
-            err (-1, "could not parse");
+            errx (-1, "could not parse");
 
     buffer_putflush (buffer_1, out.s, out.len);
 

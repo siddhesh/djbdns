@@ -35,6 +35,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <sys/resource.h>
 
 #include "version.h"
 
@@ -847,6 +848,23 @@ main (int argc, char *argv[])
     warnx ("version %s: starting: %s\n", VERSION, char_seed);
 
     read_conf (CFGFILE);
+
+    if (x = env_get ("DATALIMIT"))
+    {
+        struct rlimit r;
+        unsigned long dlimit = atol (x);
+
+        if (getrlimit (RLIMIT_DATA,  &r) != 0)
+            err (-1, "could not get resource RLIMIT_DATA");
+
+        r.rlim_cur = (dlimit <= r.rlim_max) ? dlimit : r.rlim_max;
+
+        if (setrlimit (RLIMIT_DATA, &r) != 0)
+            err (-1, "could not set resource RLIMIT_DATA");
+
+        if (debug_level)
+            warnx ("DATALIMIT set to `%ld' bytes", r.rlim_cur);
+    }
 
     x = env_get ("IP");
     if (!x)

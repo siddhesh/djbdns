@@ -4,7 +4,6 @@
 #include <sys/stat.h>
 #include "stralloc.h"
 #include "buffer.h"
-#include "exit.h"
 #include "open.h"
 #include "getln.h"
 #include "strerr.h"
@@ -253,5 +252,6 @@ int main(int argc,char **argv)
   if (close(fdnew) == -1) die_write(); /* NFS dorks */
   if (rename(fnnew,fn) == -1)
     strerr_die6sys(111,FATAL,"unable to move ",fnnew," to ",fn,": ");
-  _exit(0);
+
+    return 0;
 }

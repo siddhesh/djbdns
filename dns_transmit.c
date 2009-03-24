@@ -355,8 +355,8 @@ dns_transmit_get (struct dns_transmit *d, const iopause_fd *x,
     int r = 0, fd = 0;
     unsigned char ch = 0;
 
-    errno = error_io;
     fd = d->s1 - 1;
+    errno = error_io;
 
     if (!x->revents)
     {

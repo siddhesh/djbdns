@@ -1,11 +1,22 @@
+Mar 24 2009 pjp <prasad@redhat.com>
+
+	* etc/dnscache.conf: default CACHESIZE & DATALIMIT changed to 5MB & 8MB
+	  respectively.
+
+	* dnscache.c: now setrlimit() data segment size to DATALIMIT as specified
+	  in dnscache.conf
+
 Mar 23 2009 pjp <prasad@redhat.com>
 
 	* Released the second version djbdns-1.05.2 that includes all the
 	  changes done so far.
 
+	* etc/servers/@ and etc/dnsroots.global is updated to the latest root name
+	  servers from ftp://rs.internic.net/domain/named.root
+
 Mar 20 2009 pjp <prasad@redhat.com>
 	
-	* dnsq.c: 
+	* dnsq.c:
 	  dnsip.c:
 	  parsetype.c: Files edited to support few command line options and
 	  are formatted to suit my coding style. Also the copyright disclaimer
@@ -74,7 +85,7 @@ Mar 17 2009 pjp <prasad@redhat.com>
 	  str_chr.c:
 	  str_rchr.c: fixed the str_rchr() function to go from `end to start'
 	  while looking for the given character.
-	  
+
 	  All the above files are formatted as per the coding style
 	  convenient to me. Also did add the copyright disclaimer at the top.
 
@@ -87,7 +98,7 @@ Mar 13 2009 pjp <prasad@redhat.com>
 
 	* Makefile.am: changed to install `dnstracesort' script.
 
-	* dns_transmit.c: patched with the `d->pos = 0' and `char udpgbuf[4096]
+	* dns_transmit.c: patched with the `d->pos = 0' and `char udpbuf[4097]'
 	  patch from Matthew Dempsky. Did add the copyright disclaimer at the
 	  top.
 	  http://marc.info/?l=djbdns&m=119983010611174&w=3
@@ -120,7 +131,7 @@ Mar  3 2009 pjp <prasad@redhat.com>
 
 	* dnscache.c: changed to create log-file under /var/log, pid-file under
 	  /var/run and also to accept some command-line options.
-	  
+
 	  See dnscache --help
 
 	* Commands removed:

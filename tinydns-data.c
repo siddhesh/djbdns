@@ -8,7 +8,6 @@
 #include "byte.h"
 #include "fmt.h"
 #include "ip4.h"
-#include "exit.h"
 #include "case.h"
 #include "scan.h"
 #include "buffer.h"
@@ -452,5 +451,5 @@ int main()
   if (rename("data.tmp","data.cdb") == -1)
     strerr_die2sys(111,FATAL,"unable to move data.tmp to data.cdb: ");
 
-  _exit(0);
+    return 0;
 }

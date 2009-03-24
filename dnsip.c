@@ -32,7 +32,6 @@
 
 #include "ip4.h"
 #include "dns.h"
-#include "exit.h"
 #include "strerr.h"
 #include "buffer.h"
 

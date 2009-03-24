@@ -1,5 +1,6 @@
 #include <err.h>
 #include <pwd.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -11,7 +12,6 @@
 
 #include "str.h"
 #include "open.h"
-#include "exit.h"
 #include "taia.h"
 #include "error.h"
 #include "strerr.h"
@@ -194,5 +194,5 @@ main (int argc, char *argv[])
     umask (022);
 #endif
 
-    _exit(0);
+    return 0;
 }

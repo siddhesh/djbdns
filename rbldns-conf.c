@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <pwd.h>
 #include "strerr.h"
-#include "exit.h"
 #include "auto_home.h"
 #include "generic-conf.h"
 
@@ -67,5 +66,5 @@ int main(int argc,char **argv)
   finish();
   perm(0644);
 
-  _exit(0);
+  return 0;
 }

@@ -16,12 +16,11 @@ AM_CFLAGS=-g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 
 SUBDIRS = etc
 
-bin_PROGRAMS = dnscache dnsip dnsipq dnsq
+bin_PROGRAMS = dnscache dnsip dnsipq dnsq dnsmx dnsname dnstxt dnsqr
 noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf \
-	dnsfilter dnsmx dnsname dnsqr dnstrace \
-	dnstxt pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf \
-	rbldns-data tinydns tinydns-conf tinydns-data tinydns-edit tinydns-get \
-	walldns walldns-conf
+	dnsfilter dnstrace pickdns pickdns-conf pickdns-data \
+	random-ip rbldns rbldns-conf rbldns-data tinydns tinydns-conf \
+	tinydns-data tinydns-edit tinydns-get walldns walldns-conf
 
 bin_SCRIPTS = djbdns dnstracesort
 

@@ -6,7 +6,6 @@
 #include "ip4.h"
 #include "gen_alloc.h"
 #include "gen_allocdefs.h"
-#include "exit.h"
 #include "buffer.h"
 #include "stralloc.h"
 #include "error.h"
@@ -470,5 +469,5 @@ int main(int argc,char **argv)
     buffer_flush(buffer_1);
   }
 
-  _exit(0);
+    return 0;
 }

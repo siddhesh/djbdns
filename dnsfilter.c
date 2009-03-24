@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include <unistd.h>
+
 #include "strerr.h"
 #include "buffer.h"
 #include "stralloc.h"
@@ -11,7 +13,6 @@
 #include "sgetopt.h"
 #include "iopause.h"
 #include "error.h"
-#include "exit.h"
 
 #define FATAL "dnsfilter: fatal: "
 
@@ -210,5 +211,5 @@ int main(int argc,char **argv)
     }
   }
 
-  _exit(0);
+    return 0;
 }

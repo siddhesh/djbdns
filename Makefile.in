@@ -35,14 +35,14 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = dnscache$(EXEEXT) dnsip$(EXEEXT) dnsipq$(EXEEXT) \
-	dnsq$(EXEEXT)
+	dnsq$(EXEEXT) dnsmx$(EXEEXT) dnsname$(EXEEXT) dnstxt$(EXEEXT) \
+	dnsqr$(EXEEXT)
 noinst_PROGRAMS = axfrdns$(EXEEXT) axfrdns-conf$(EXEEXT) \
 	axfr-get$(EXEEXT) dnscache-conf$(EXEEXT) dnsfilter$(EXEEXT) \
-	dnsmx$(EXEEXT) dnsname$(EXEEXT) dnsqr$(EXEEXT) \
-	dnstrace$(EXEEXT) dnstxt$(EXEEXT) pickdns$(EXEEXT) \
-	pickdns-conf$(EXEEXT) pickdns-data$(EXEEXT) random-ip$(EXEEXT) \
-	rbldns$(EXEEXT) rbldns-conf$(EXEEXT) rbldns-data$(EXEEXT) \
-	tinydns$(EXEEXT) tinydns-conf$(EXEEXT) tinydns-data$(EXEEXT) \
+	dnstrace$(EXEEXT) pickdns$(EXEEXT) pickdns-conf$(EXEEXT) \
+	pickdns-data$(EXEEXT) random-ip$(EXEEXT) rbldns$(EXEEXT) \
+	rbldns-conf$(EXEEXT) rbldns-data$(EXEEXT) tinydns$(EXEEXT) \
+	tinydns-conf$(EXEEXT) tinydns-data$(EXEEXT) \
 	tinydns-edit$(EXEEXT) tinydns-get$(EXEEXT) walldns$(EXEEXT) \
 	walldns-conf$(EXEEXT)
 subdir = .

@@ -1,6 +1,7 @@
+#include <stdlib.h>
 #include <unistd.h>
+
 #include "droproot.h"
-#include "exit.h"
 #include "env.h"
 #include "uint32.h"
 #include "uint16.h"
@@ -303,7 +304,7 @@ void netread(char *buf,unsigned int len)
 
   while (len > 0) {
     r = timeoutread(60,0,buf,len);
-    if (r == 0) _exit(0);
+    if (r == 0) exit(0);
     if (r < 0) die_netread();
     buf += r; len -= r;
   }
