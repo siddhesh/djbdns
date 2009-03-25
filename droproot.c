@@ -34,7 +34,7 @@
 extern short debug_level;
 
 void
-droproot (const char *fatal)
+droproot (void)
 {
     char *x = NULL;
     unsigned long id = 0;

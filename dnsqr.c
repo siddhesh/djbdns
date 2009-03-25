@@ -48,7 +48,7 @@ static char *prog = NULL;
 void
 usage (void)
 {
-    printf ("Usage: <record-type> <domain-name>\n", prog);
+    printf ("Usage: %s <record-type> <domain-name>\n", prog);
 }
 
 void

@@ -6,7 +6,7 @@
 #include "openreadclose.h"
 #include "dns.h"
 
-static stralloc data = {0};
+static stralloc data = { 0, 0, 0 };
 
 static int init(stralloc *rules)
 {
@@ -107,7 +107,7 @@ static int init(stralloc *rules)
 static int ok = 0;
 static unsigned int uses;
 static struct taia deadline;
-static stralloc rules = {0}; /* defined if ok */
+static stralloc rules = { 0, 0, 0 }; /* defined if ok */
 
 int dns_resolvconfrewrite(stralloc *out)
 {

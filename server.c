@@ -96,7 +96,7 @@ int main()
   if (socket_bind4_reuse(udp53,ip,53) == -1)
     strerr_die2sys(111,fatal,"unable to bind UDP socket: ");
 
-  droproot(fatal);
+  droproot();
 
   initialize();
   

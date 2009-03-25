@@ -5,7 +5,7 @@
 #include "env.h"
 #include "dns.h"
 
-static stralloc data = {0};
+static stralloc data = { 0, 0, 0 };
 
 static int init(char ip[64])
 {

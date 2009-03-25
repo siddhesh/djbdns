@@ -324,7 +324,7 @@ int main()
   char qclass[2];
   const char *x;
 
-  droproot(FATAL);
+  droproot();
   dns_random_init(seed);
 
   axfr = env_get("AXFR");

@@ -369,7 +369,7 @@ NEWNAME:
                     goto DIE;
 
                 pos = 0;
-                while (pos = dns_packet_getname (cached, cachedlen, pos, &t2))
+                while ((pos=dns_packet_getname (cached, cachedlen, pos, &t2)))
                 {
                     if (!response_rstart (d, DNS_T_NS, ttl))
                         goto DIE;
@@ -395,7 +395,7 @@ NEWNAME:
                     goto DIE;
 
                 pos = 0;
-                while (pos = dns_packet_getname (cached, cachedlen, pos, &t2))
+                while ((pos=dns_packet_getname (cached, cachedlen, pos, &t2)))
                 {
                     if (!response_rstart (d, DNS_T_PTR, ttl))
                         goto DIE;
@@ -421,7 +421,7 @@ NEWNAME:
                     goto DIE;
 
                 pos = 0;
-                while (pos = dns_packet_copy (cached, cachedlen, pos, misc, 2))
+                while ((pos=dns_packet_copy (cached, cachedlen, pos, misc, 2)))
                 {
                     pos = dns_packet_getname (cached, cachedlen, pos, &t2);
                     if (!pos)
@@ -939,7 +939,7 @@ HAVEPACKET:
                         goto DIE;
                     save_data (header, 4);
 
-                /*  if (debug_level > 2)  */
+                    if (debug_level)
                         log_rr (whichserver, t1, DNS_T_A, header, 4, ttl);
                 }
                 ++i;
@@ -965,7 +965,7 @@ HAVEPACKET:
                 save_data (header + 8, 2);
                 save_data (buf + pos, datalen);
 
-            /*  if (debug_level > 2)    */
+                if (debug_level)
                     log_rr (whichserver, t1, type, buf + pos, datalen, ttl);
 
                 ++i;

@@ -130,7 +130,7 @@ static int doit(char *q,char qtype[2])
     flagns = 0;
     flagauthoritative = 0;
     cdb_findstart(&c);
-    while (r = find(control,0)) {
+    while ((r = find (control, 0))) {
       if (r == -1) return 0;
       if (byte_equal(type,2,DNS_T_SOA)) flagauthoritative = 1;
       if (byte_equal(type,2,DNS_T_NS)) flagns = 1;
@@ -155,7 +155,7 @@ static int doit(char *q,char qtype[2])
     addrnum = 0;
     addrttl = 0;
     cdb_findstart(&c);
-    while (r = find(wild,wild != q)) {
+    while ((r = find (wild, wild != q))) {
       if (r == -1) return 0;
       flagfound = 1;
       if (flaggavesoa && byte_equal(type,2,DNS_T_SOA)) continue;
@@ -212,7 +212,7 @@ static int doit(char *q,char qtype[2])
 
   if (flagauthoritative && (aupos == anpos)) {
     cdb_findstart(&c);
-    while (r = find(control,0)) {
+    while ((r = find (control, 0))) {
       if (r == -1) return 0;
       if (byte_equal(type,2,DNS_T_SOA)) {
         if (!response_rstart(control,DNS_T_SOA,ttl)) return 0;
@@ -227,7 +227,7 @@ static int doit(char *q,char qtype[2])
   else
     if (want(control,DNS_T_NS)) {
       cdb_findstart(&c);
-      while (r = find(control,0)) {
+      while ((r = find (control, 0))) {
         if (r == -1) return 0;
         if (byte_equal(type,2,DNS_T_NS)) {
           if (!response_rstart(control,DNS_T_NS,ttl)) return 0;
@@ -252,7 +252,7 @@ static int doit(char *q,char qtype[2])
       case_lowerb(d1,dns_domain_length(d1));
       if (want(d1,DNS_T_A)) {
 	cdb_findstart(&c);
-	while (r = find(d1,0)) {
+	while ((r = find (d1, 0))) {
           if (r == -1) return 0;
 	  if (byte_equal(type,2,DNS_T_A)) {
             if (!response_rstart(d1,DNS_T_A,ttl)) return 0;

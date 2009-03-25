@@ -799,7 +799,7 @@ write_pid (void)
 void
 handle_term (int n)
 {
-    warnx ("is shutting down: ---\n");
+    warnx ("going down with signal: %d ---\n", n);
 
     exit (0);
 }
@@ -849,7 +849,7 @@ main (int argc, char *argv[])
 
     read_conf (CFGFILE);
 
-    if (x = env_get ("DATALIMIT"))
+    if ((x = env_get ("DATALIMIT")))
     {
         struct rlimit r;
         unsigned long dlimit = atol (x);
@@ -895,7 +895,7 @@ main (int argc, char *argv[])
     }
 
     seed_addtime ();
-    droproot (FATAL);
+    droproot ();
     if (mode & DAEMON)
         /* crerate a new session & detach from controlling tty */
         if (setsid () < 0)

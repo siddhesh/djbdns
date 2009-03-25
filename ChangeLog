@@ -1,18 +1,52 @@
 Mar 24 2009 pjp <prasad@redhat.com>
 
-	* etc/dnscache.conf: default CACHESIZE & DATALIMIT changed to 5MB & 8MB
-	  respectively.
+	* axfrdns.c
+	  buffer_put.c
+	  dns_domain.c
+	  dns_rcip.c
+	  dns_rcrw.c
+	  dns_resolve.c
+	  dnscache.c
+	  dnsipq.c
+	  dnsq.c
+	  dnsqr.c
+	  getln2.c
+	  log.c
+	  query.c
+	  seek_set.c
+	  server.c
+	  tdlookup.c: removed compiler warnings about
+	  	- implicit function declarations by adding appropriate system
+		  header files.
+		- Parenthesise the expressions in some while(exp)
+		- changed function calls for droproot(), prot_uid() & prot_gid()
+		- and some minor changes.
 
-	* dnscache.c: now setrlimit() data segment size to DATALIMIT as specified
-	  in dnscache.conf
+	* prot.c
+	  prot.h: functions prot_uid & prot_gid now accept parameters of
+	  type gid_t instead of an int.
+
+	* droproot.c: formal parameter "const char *fatal" is removed; Now
+	  droproot(void) does not accept any parameters. There was relevant
+	  changes to files like droproot.h, dnscache.c, axfrdns.c etc. from
+	  where droproot() function is being called.
+
+	* exit.h: removed; And so are the #include "exit.h" statements from
+	  all the source(.c) files.
+
+	* etc/dnscache.conf: default CACHESIZE & DATALIMIT changed to 5MB &
+	  8MB respectively.
+
+	* dnscache.c: now setrlimit() data segment size to DATALIMIT as
+	  specified in dnscache.conf
 
 Mar 23 2009 pjp <prasad@redhat.com>
 
 	* Released the second version djbdns-1.05.2 that includes all the
 	  changes done so far.
 
-	* etc/servers/@ and etc/dnsroots.global is updated to the latest root name
-	  servers from ftp://rs.internic.net/domain/named.root
+	* etc/servers/@ and etc/dnsroots.global is updated to the latest root
+	  name servers from ftp://rs.internic.net/domain/named.root
 
 Mar 20 2009 pjp <prasad@redhat.com>
 	

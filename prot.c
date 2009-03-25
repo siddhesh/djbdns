@@ -22,11 +22,14 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include <grp.h>
+#include <unistd.h>
+
 #include "prot.h"
 #include "hasshsgr.h"
 
 int
-prot_gid (int gid)
+prot_gid (gid_t gid)
 {
 #ifdef HASSHORTSETGROUPS
     short x[2];
@@ -46,7 +49,7 @@ prot_gid (int gid)
 }
 
 int
-prot_uid (int uid)
+prot_uid (uid_t uid)
 {
     if (setuid (uid) == -1)
         return -1;
