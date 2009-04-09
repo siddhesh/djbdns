@@ -22,6 +22,7 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#include <fcntl.h>
 #include <unistd.h>
 
 #include "open.h"
@@ -166,7 +167,7 @@ roots_init (void)
 
     if (!stralloc_copys (&data, ""))
         return 0;
-    if ((fddir = open_read (".")) == -1)
+    if ((fddir = open (".", O_RDONLY | O_NDELAY)) == -1)
         return 0;
 
     r = init1 ();

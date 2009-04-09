@@ -6,7 +6,8 @@
 #define O_NONBLOCK O_NDELAY
 #endif
 
-int ndelay_on(int fd)
+int
+ndelay_on (int fd)
 {
-  return fcntl(fd,F_SETFL,fcntl(fd,F_GETFL,0) | O_NONBLOCK);
+    return fcntl (fd, F_SETFL, fcntl(fd, F_GETFL, 0) | O_NONBLOCK);
 }

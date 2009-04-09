@@ -21,7 +21,7 @@ struct query {
   char type[2];
   char class[2];
   struct dns_transmit dt;
-} ;
+};
 
 extern int query_start(struct query *,char *,char *,char *,char *);
 extern void query_io(struct query *,iopause_fd *,struct taia *);

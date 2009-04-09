@@ -187,7 +187,7 @@ liballoc_a_SOURCES = alloc.c alloc_re.c getln.c getln2.c stralloc_cat.c \
 
 libbuffer_a_SOURCES = buffer.c buffer_1.c buffer_2.c buffer_copy.c \
 	buffer_get.c buffer_put.c strerr_die.c strerr_sys.c \
-	buffer.h byte.h error.h str.h exit.h strerr.h
+	buffer.h byte.h error.h str.h strerr.h
 
 libbyte_a_SOURCES = byte_chr.c byte_copy.c byte_cr.c byte_diff.c byte_zero.c \
 	case_diffb.c case_diffs.c case_lowerb.c fmt_ulong.c ip4_fmt.c \

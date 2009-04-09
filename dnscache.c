@@ -168,33 +168,32 @@ u_new (void)
     static char *q = 0;
     char qtype[2], qclass[2];
 
-    for (j = 0; j < MAXUDP; ++j)
+    for (j = 0; j < MAXUDP; j++)
         if (!u[j].active)
-          break;
+            break;
 
     if (j >= MAXUDP)
     {
         j = 0;
-        for (i = 1; i < MAXUDP; ++i)
+        for (i = 1; i < MAXUDP; i++)
             if (taia_less (&u[i].start, &u[j].start))
                 j = i;
         errno = error_timeout;
-        u_drop(j);
+        u_drop (j);
     }
 
     x = u + j;
     taia_now (&x->start);
 
-    len = socket_recv4 (udp53, buf, sizeof buf, x->ip, &x->port);
+    len = socket_recv4 (udp53, buf, sizeof (buf), x->ip, &x->port);
     if (len == -1)
         return;
     if (len >= sizeof buf)
         return;
     if (x->port < 1024 && x->port != 53)
-            return;
+        return;
     if (!okclient (x->ip))
         return;
-
     if (!packetquery (buf, len, &q, qtype, qclass, x->id))
         return;
 
@@ -459,10 +458,10 @@ t_new (void)
 }
 
 
-iopause_fd io[3 + MAXUDP + MAXTCP];
-
 iopause_fd *udp53io = NULL;
 iopause_fd *tcp53io = NULL;
+iopause_fd io[3 + MAXUDP + MAXTCP];
+
 
 static void
 doit (void)
@@ -512,7 +511,7 @@ doit (void)
                 }
             }
         }
-        iopause (io,iolen, &deadline, &stamp);
+        iopause (io, iolen, &deadline, &stamp);
 
         for (j = 0; j < MAXUDP; ++j)
         {
@@ -866,8 +865,7 @@ main (int argc, char *argv[])
             warnx ("DATALIMIT set to `%ld' bytes", r.rlim_cur);
     }
 
-    x = env_get ("IP");
-    if (!x)
+    if (!(x = env_get ("IP")))
         err (-1, "$IP not set");
     if (!ip4_scan (x, myipincoming))
         err (-1, "could not parse IP address `%s'", x);
