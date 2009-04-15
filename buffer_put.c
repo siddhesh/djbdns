@@ -27,7 +27,8 @@ allwrite (int (*op)(), int fd, const char *buf, unsigned int len)
     return 0;
 }
 
-int buffer_flush (buffer *s)
+int
+buffer_flush (buffer *s)
 {
     int p = s->p;
 

@@ -37,6 +37,7 @@
 #include "response.h"
 #include "query.h"
 
+extern short debug_level;
 static int flagforwardonly = 0;
 
 void
@@ -262,7 +263,8 @@ doit (struct query *z, int state)
         goto HAVEPACKET;
     if (state == -1)
     {
-        log_servfail (z->name[z->level]);
+        if (debug_level > 1)
+            log_servfail (z->name[z->level]);
         goto SERVFAIL;
     }
 
@@ -319,7 +321,8 @@ NEWNAME:
             response_rfinish (RESPONSE_ANSWER);
         }
         cleanup (z);
-        log_stats ();
+        if (debug_level > 2)
+            log_stats ();
 
         return 1;
     }
@@ -332,7 +335,8 @@ NEWNAME:
         cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
         if (cached)
         {
-            log_cachednxdomain (d);
+            if (debug_level > 2)
+                log_cachednxdomain (d);
             goto NXDOMAIN;
         }
 
@@ -342,7 +346,9 @@ NEWNAME:
         {
             if (typematch (DNS_T_CNAME, dtype))
             {
-                log_cachedanswer (d, DNS_T_CNAME);
+                if (debug_level > 2)
+                    log_cachedanswer (d, DNS_T_CNAME);
+
                 if (!rqa (z))
                     goto DIE;
                 if (!response_cname (z->name[0], cached, ttl))
@@ -351,7 +357,9 @@ NEWNAME:
 
                 return 1;
             }
-            log_cachedcname (d, cached);
+            if (debug_level > 2)
+                log_cachedcname (d, cached);
+
             if (!dns_domain_copy (&cname, cached))
                 goto DIE;
 
@@ -364,7 +372,8 @@ NEWNAME:
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
             if (cached && (cachedlen || byte_diff (dtype, 2, DNS_T_ANY)))
             {
-                log_cachedanswer (d, DNS_T_NS);
+                if (debug_level > 2)
+                    log_cachedanswer (d, DNS_T_NS);
                 if (!rqa (z))
                     goto DIE;
 
@@ -390,7 +399,8 @@ NEWNAME:
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
             if (cached && (cachedlen || byte_diff(dtype, 2, DNS_T_ANY)))
             {
-                log_cachedanswer (d, DNS_T_PTR);
+                if (debug_level > 2)
+                    log_cachedanswer (d, DNS_T_PTR);
                 if (!rqa (z))
                     goto DIE;
 
@@ -416,7 +426,8 @@ NEWNAME:
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
             if (cached && (cachedlen || byte_diff (dtype, 2, DNS_T_ANY)))
             {
-                log_cachedanswer (d, DNS_T_MX);
+                if (debug_level > 2)
+                    log_cachedanswer (d, DNS_T_MX);
                 if (!rqa (z))
                     goto DIE;
 
@@ -449,7 +460,8 @@ NEWNAME:
             {
                 if (z->level)
                 {
-                    log_cachedanswer (d, DNS_T_A);
+                    if (debug_level > 2)
+                        log_cachedanswer (d, DNS_T_A);
                     while (cachedlen >= 4)
                     {
                         for (k = 0; k < 64; k += 4)
@@ -468,7 +480,8 @@ NEWNAME:
                     goto LOWERLEVEL;
                 }
 
-                log_cachedanswer (d, DNS_T_A);
+                if (debug_level > 2)
+                    log_cachedanswer (d, DNS_T_A);
                 if (!rqa (z))
                     goto DIE;
                 while (cachedlen >= 4)
@@ -499,7 +512,8 @@ NEWNAME:
             cached = cache_get (key, dlen + 2, &cachedlen, &ttl);
             if (cached && (cachedlen || byte_diff (dtype, 2, DNS_T_ANY)))
             {
-                log_cachedanswer (d, dtype);
+                if (debug_level > 2)
+                    log_cachedanswer (d, dtype);
                 if (!rqa (z))
                     goto DIE;
                 while (cachedlen >= 2)
@@ -553,7 +567,8 @@ NEWNAME:
                     pos = dns_packet_getname (cached, cachedlen, pos, &t1);
                     while (pos)
                     {
-                        log_cachedns (d, t1);
+                        if (debug_level > 2)
+                            log_cachedns (d, t1);
                         if (j < QUERY_MAXNS)
                             if (!dns_domain_copy (&z->ns[z->level][j++], t1))
                                 goto DIE;
@@ -602,15 +617,19 @@ HAVENS:
     dns_sortip (z->servers[z->level], 64);
     if (z->level)
     {
-        log_tx (z->name[z->level], DNS_T_A,
+        if (debug_level > 2)
+            log_tx (z->name[z->level], DNS_T_A,
                         z->control[z->level], z->servers[z->level],z->level);
+
         if (dns_transmit_start (&z->dt, z->servers[z->level], flagforwardonly,
                                 z->name[z->level], DNS_T_A,z->localip) == -1)
             goto DIE;
     }
     else
     {
-        log_tx (z->name[0], z->type, z->control[0], z->servers[0], 0);
+        if (debug_level > 2)
+            log_tx (z->name[0], z->type, z->control[0], z->servers[0], 0);
+
         if (dns_transmit_start (&z->dt, z->servers[0], flagforwardonly,
                                 z->name[0], z->type, z->localip) == -1)
             goto DIE;
@@ -717,7 +736,8 @@ HAVEPACKET:
         if (dns_domain_equal (referral, control)
             || !dns_domain_suffix (referral, control))
         {
-            log_lame (whichserver, control, referral);
+            if (debug_level > 2)
+                log_lame (whichserver, control, referral);
             byte_zero (whichserver, 4);
 
             goto HAVENS;
@@ -849,8 +869,8 @@ HAVEPACKET:
                 pos = dns_packet_copy (buf, len, pos, misc, 20);
                 if (!pos)
                     goto DIE;
-                if (records[i] < posauthority)
-                  log_rrsoa (whichserver, t1, t2, t3, misc, ttl);
+                if (records[i] < posauthority && debug_level > 2)
+                      log_rrsoa (whichserver, t1, t2, t3, misc, ttl);
                 ++i;
             }
         }
@@ -862,7 +882,10 @@ HAVEPACKET:
             pos = dns_packet_getname (buf, len, pos + 10, &t2);
             if (!pos)
                 goto DIE;
-            log_rrcname (whichserver, t1, t2, ttl);
+
+            if (debug_level > 2)
+                log_rrcname (whichserver, t1, t2, ttl);
+
             cachegeneric (DNS_T_CNAME, t1, t2, dns_domain_length (t2), ttl);
         }
         else if (byte_equal (type, 2, DNS_T_PTR))
@@ -876,7 +899,9 @@ HAVEPACKET:
                 pos = dns_packet_getname (buf, len, pos + 10, &t2);
                 if (!pos)
                     goto DIE;
-                log_rrptr (whichserver, t1, t2, ttl);
+                if (debug_level > 2)
+                    log_rrptr (whichserver, t1, t2, ttl);
+
                 save_data (t2, dns_domain_length (t2));
                 ++i;
             }
@@ -893,7 +918,8 @@ HAVEPACKET:
                 pos = dns_packet_getname (buf, len, pos + 10, &t2);
                 if (!pos)
                     goto DIE;
-                log_rrns (whichserver, t1, t2, ttl);
+                if (debug_level > 2)
+                    log_rrns (whichserver, t1, t2, ttl);
                 save_data (t2, dns_domain_length (t2));
                 ++i;
             }
@@ -913,7 +939,8 @@ HAVEPACKET:
                 pos = dns_packet_getname (buf, len, pos, &t2);
                 if (!pos)
                     goto DIE;
-                log_rrmx (whichserver, t1, t2, misc, ttl);
+                if (debug_level > 2)
+                    log_rrmx (whichserver, t1, t2, misc, ttl);
                 save_data (misc, 2);
                 save_data (t2, dns_domain_length (t2));
                 ++i;
@@ -933,13 +960,12 @@ HAVEPACKET:
                     goto DIE;
                 if (byte_equal (header + 8, 2, "\0\4"))
                 {
-                    extern short debug_level;
                     pos = dns_packet_copy (buf, len, pos, header, 4);
                     if (!pos)
                         goto DIE;
                     save_data (header, 4);
 
-                    if (debug_level)
+                    if (debug_level > 2)
                         log_rr (whichserver, t1, DNS_T_A, header, 4, ttl);
                 }
                 ++i;
@@ -951,8 +977,6 @@ HAVEPACKET:
             save_start ();
             while (i < j)
             {
-                extern short debug_level;
-
                 pos = dns_packet_skipname (buf, len, records[i]);
                 if (!pos)
                     goto DIE;
@@ -965,7 +989,7 @@ HAVEPACKET:
                 save_data (header + 8, 2);
                 save_data (buf + pos, datalen);
 
-                if (debug_level)
+                if (debug_level > 2)
                     log_rr (whichserver, t1, type, buf + pos, datalen, ttl);
 
                 ++i;
@@ -1003,7 +1027,8 @@ CNAME:
 
     if (rcode == 3)
     {
-        log_nxdomain (whichserver, d, soattl);
+        if (debug_level > 2)
+            log_nxdomain (whichserver, d, soattl);
         cachegeneric (DNS_T_ANY, d, "", 0, soattl);
 
 NXDOMAIN:
@@ -1025,10 +1050,12 @@ NXDOMAIN:
                 {
                     save_start ();
                     save_finish (dtype, d, soattl);
-                    log_nodata (whichserver, d, dtype, soattl);
+                    if (debug_level > 2)
+                        log_nodata (whichserver, d, dtype, soattl);
                 }
 
-    log_stats ();
+    if (debug_level > 2)
+        log_stats ();
 
     if (flagout || flagsoa || !flagreferral)
     {

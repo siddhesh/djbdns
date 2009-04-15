@@ -36,15 +36,14 @@ build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = dnscache$(EXEEXT) dnsip$(EXEEXT) dnsipq$(EXEEXT) \
 	dnsq$(EXEEXT) dnsmx$(EXEEXT) dnsname$(EXEEXT) dnstxt$(EXEEXT) \
-	dnsqr$(EXEEXT)
+	dnsqr$(EXEEXT) dnsfilter$(EXEEXT)
 noinst_PROGRAMS = axfrdns$(EXEEXT) axfrdns-conf$(EXEEXT) \
-	axfr-get$(EXEEXT) dnscache-conf$(EXEEXT) dnsfilter$(EXEEXT) \
-	dnstrace$(EXEEXT) pickdns$(EXEEXT) pickdns-conf$(EXEEXT) \
-	pickdns-data$(EXEEXT) random-ip$(EXEEXT) rbldns$(EXEEXT) \
-	rbldns-conf$(EXEEXT) rbldns-data$(EXEEXT) tinydns$(EXEEXT) \
-	tinydns-conf$(EXEEXT) tinydns-data$(EXEEXT) \
-	tinydns-edit$(EXEEXT) tinydns-get$(EXEEXT) walldns$(EXEEXT) \
-	walldns-conf$(EXEEXT)
+	axfr-get$(EXEEXT) dnscache-conf$(EXEEXT) dnstrace$(EXEEXT) \
+	pickdns$(EXEEXT) pickdns-conf$(EXEEXT) pickdns-data$(EXEEXT) \
+	random-ip$(EXEEXT) rbldns$(EXEEXT) rbldns-conf$(EXEEXT) \
+	rbldns-data$(EXEEXT) tinydns$(EXEEXT) tinydns-conf$(EXEEXT) \
+	tinydns-data$(EXEEXT) tinydns-edit$(EXEEXT) \
+	tinydns-get$(EXEEXT) walldns$(EXEEXT) walldns-conf$(EXEEXT)
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \

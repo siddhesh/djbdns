@@ -158,10 +158,12 @@ log_query (uint64 *qnum, const char client[4], unsigned int port,
     
     ip (client);
     string (":");
-    hex (port >> 8);
-    hex (port & 255);
+    number (port);
+
     string (":");
-    logid (id);
+/*    logid (id); */
+    number ((int)id[0] & 0xFF);
+    number ((int)id[1] & 0xFF);
     space ();
 
     logtype (qtype);

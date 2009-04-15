@@ -139,7 +139,9 @@ u_drop (int j)
     if (!u[j].active)
         return;
 
-    log_querydrop (&u[j].active);
+    if (debug_level > 2)
+        log_querydrop (&u[j].active);
+
     u[j].active = 0;
     --uactive;
 }
@@ -154,7 +156,10 @@ u_respond (int j)
     if (response_len > 512)
         response_tc ();
     socket_send4 (udp53, response, response_len, u[j].ip, u[j].port);
-    log_querydone (&u[j].active, response_len);
+
+    if (debug_level)
+        log_querydone (&u[j].active, response_len);
+
     u[j].active = 0;
     --uactive;
 }
@@ -199,7 +204,10 @@ u_new (void)
 
     x->active = ++numqueries;
     ++uactive;
-    log_query (&x->active, x->ip, x->port, x->id, q, qtype);
+
+    if (debug_level)
+        log_query (&x->active, x->ip, x->port, x->id, q, qtype);
+
     switch (query_start (&x->q, q, qtype, qclass, myipoutgoing))
     {
     case -1:
@@ -272,7 +280,9 @@ t_close (int j)
       return;
 
     t_free (j);
-    log_tcpclose (t[j].ip, t[j].port);
+    if (debug_level > 2)
+        log_tcpclose (t[j].ip, t[j].port);
+
     close (t[j].tcp);
     t[j].active = 0;
     --tactive;
@@ -281,7 +291,9 @@ t_close (int j)
 void
 t_drop (int j)
 {
-    log_querydrop (&t[j].active);
+    if (debug_level > 2)
+        log_querydrop (&t[j].active);
+
     errno = error_pipe;
     t_close (j);
 }
@@ -292,7 +304,9 @@ t_respond (int j)
     if (!t[j].active)
         return;
 
-    log_querydone (&t[j].active, response_len);
+    if (debug_level)
+        log_querydone (&t[j].active, response_len);
+
     response_id (t[j].id);
     t[j].len = response_len + 2;
     t_free (j);
@@ -390,7 +404,10 @@ t_rw (int j)
     }
 
     x->active = ++numqueries;
-    log_query (&x->active, x->ip, x->port, x->id, q, qtype);
+
+    if (debug_level)
+        log_query (&x->active, x->ip, x->port, x->id, q, qtype);
+
     switch (query_start (&x->q, q, qtype, qclass, myipoutgoing))
     {
     case -1:
@@ -454,7 +471,8 @@ t_new (void)
     x->state = 1;
     t_timeout (j);
 
-    log_tcpopen (x->ip, x->port);
+    if (debug_level > 2)
+        log_tcpopen (x->ip, x->port);
 }
 
 

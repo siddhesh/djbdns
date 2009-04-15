@@ -39,7 +39,7 @@ start ()
 
     # Start daemon.
     echo -n $"Starting `basename $prog`: "
-    daemon $prog -d1 -D 2>> $logfile
+    daemon $prog -d2 -D 2>> $logfile
     RETVAL=$?
     echo
     [ $RETVAL -eq 0 ] && touch $lockfile

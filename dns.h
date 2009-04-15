@@ -5,23 +5,23 @@
 #include "iopause.h"
 #include "taia.h"
 
-#define DNS_C_IN "\0\1"
-#define DNS_C_ANY "\0\377"
+#define DNS_C_IN "\0\1"             /* [0][1] */
+#define DNS_C_ANY "\0\377"          /* [0][255] */
 
-#define DNS_T_A "\0\1"
-#define DNS_T_NS "\0\2"
-#define DNS_T_CNAME "\0\5"
-#define DNS_T_SOA "\0\6"
-#define DNS_T_PTR "\0\14"
-#define DNS_T_HINFO "\0\15"
-#define DNS_T_MX "\0\17"
-#define DNS_T_TXT "\0\20"
-#define DNS_T_RP "\0\21"
-#define DNS_T_SIG "\0\30"
-#define DNS_T_KEY "\0\31"
-#define DNS_T_AAAA "\0\34"
-#define DNS_T_AXFR "\0\374"
-#define DNS_T_ANY "\0\377"
+#define DNS_T_A "\0\1"              /* [0][1] */
+#define DNS_T_NS "\0\2"             /* [0][2] */
+#define DNS_T_CNAME "\0\5"          /* [0][5] */
+#define DNS_T_SOA "\0\6"            /* [0][6] */
+#define DNS_T_PTR "\0\14"           /* [0][12] */
+#define DNS_T_HINFO "\0\15"         /* [0][13] */
+#define DNS_T_MX "\0\17"            /* [0][15] */
+#define DNS_T_TXT "\0\20"           /* [0][16] */
+#define DNS_T_RP "\0\21"            /* [0][17] */
+#define DNS_T_SIG "\0\30"           /* [0][24] */
+#define DNS_T_KEY "\0\31"           /* [0][25] */
+#define DNS_T_AAAA "\0\34"          /* [0][28] */
+#define DNS_T_AXFR "\0\374"         /* [0][252] */
+#define DNS_T_ANY "\0\377"          /* [0][255] */
 
 
 struct dns_transmit {
