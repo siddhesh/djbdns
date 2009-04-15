@@ -41,6 +41,8 @@ start ()
     echo -n $"Starting `basename $prog`: "
     daemon $prog -d2 -D 2>> $logfile
     RETVAL=$?
+
+    chmod og= $logfile
     echo
     [ $RETVAL -eq 0 ] && touch $lockfile
 
