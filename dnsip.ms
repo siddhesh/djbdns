@@ -1,6 +1,6 @@
 \"
 \" dnsip.1: This is a manuscript of the manual page for `dnsip'. This file is
-\" part of the `djbdns' project version 1.05.2.
+\" part of the `djbdns' project version 1.05.2 or greater.
 \"
 
 \" No hyphenation

@@ -1,8 +1,11 @@
 Apr 15 2009 pjp <prasad@redhat.com>
 
-	* Makefile.am: dnsfilter moved to bin_PROGRAMS
+	* dnsfilter.ms: new manual page for dnsfilter.
 
-	* dns.h: added comments indicating decimal values of DNS_T_* macros
+	* Makefile.am: dnsfilter moved to bin_PROGRAMS, and added manual page
+	  rule for dnsfilter.
+
+	* dns.h: added comments indicating decimal values of DNS_T_* macros.
 
 	* query.c
 	  dnscache.c: edited to log messages according to debug_level(1 2 or 3).

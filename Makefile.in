@@ -451,8 +451,8 @@ AM_CFLAGS = -g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 
 SUBDIRS = etc
 bin_SCRIPTS = djbdns dnstracesort
-noinst_MANS = dnscache.ms dnsip.ms dnsq.ms
-nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
@@ -1505,6 +1505,9 @@ djbdns: djbdns.sh
 
 dnscache.1: dnscache.ms
 	sed -e 's:PREFIX:${sysconfdir}:' dnscache.ms > dnscache.1
+
+dnsfilter.1: dnsfilter.ms
+	cp dnsfilter.ms dnsfilter.1
 
 dnsip.1: dnsip.ms
 	cp dnsip.ms dnsip.1

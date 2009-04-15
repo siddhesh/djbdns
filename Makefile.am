@@ -26,8 +26,8 @@ noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf \
 
 bin_SCRIPTS = djbdns dnstracesort
 
-noinst_MANS = dnscache.ms dnsip.ms dnsq.ms
-nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1
 
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
@@ -68,6 +68,9 @@ dnscache_conf_LDADD = libtai.a libbuffer.a libunix.a libbyte.a
 dnsfilter_SOURCES = dnsfilter.c iopause.c select.h
 dnsfilter_LDADD = libgetopt.a libdns.a libenv.a libtai.a liballoc.a \
 	libbuffer.a libunix.a libbyte.a
+
+dnsfilter.1: dnsfilter.ms
+	cp dnsfilter.ms dnsfilter.1
 
 dnsip_SOURCES = dnsip.c iopause.c select.h version.h
 dnsip_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
