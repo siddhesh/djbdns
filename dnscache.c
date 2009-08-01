@@ -48,27 +48,27 @@ short mode = 0, debug_level = 0;
 
 enum op_mode { DAEMON = 1, DEBUG = 2 };
 
-
+#include "dns.h"
 #include "env.h"
-#include "scan.h"
-#include "strerr.h"
-#include "error.h"
 #include "ip4.h"
+#include "fmt.h"
+#include "log.h"
+#include "scan.h"
+#include "taia.h"
+#include "byte.h"
+#include "query.h"
+#include "alloc.h"
+#include "error.h"
+#include "roots.h"
+#include "cache.h"
+#include "ndelay.h"
+#include "strerr.h"
 #include "uint16.h"
 #include "uint64.h"
 #include "socket.h"
-#include "dns.h"
-#include "taia.h"
-#include "byte.h"
-#include "roots.h"
-#include "fmt.h"
+#include "common.h"
 #include "iopause.h"
-#include "query.h"
-#include "alloc.h"
 #include "response.h"
-#include "cache.h"
-#include "ndelay.h"
-#include "log.h"
 #include "okclient.h"
 #include "droproot.h"
 
@@ -570,20 +570,11 @@ doit (void)
     }
 }
 
-#define FATAL "dnscache: fatal: "
 
-#define free(ptr) \
-{ \
-    if ((ptr)) \
-        free ((ptr)); \
-    (ptr) = NULL; \
-}
-
-uint32 seed[32];
-int seedpos = 0;
+extern uint32 seed[32];         /* defined in common.c */
 
 void
-usage ()
+usage (void)
 {
     printf ("Usage: %s [OPTIONS]\n", prog);
 }
@@ -597,7 +588,7 @@ printh (void)
     printf ("%-17s %s\n", "   -D", "run as daemon");
     printf ("%-17s %s\n", "   -h --help", "print this help");
     printf ("%-17s %s\n", "   -v --version", "print version information");
-    printf ("\nReport bugs to <prasad@redhat.com>\n");
+    printf ("\nReport bugs to <pj.pandit@yahoo.co.in>\n");
 }
 
 int
@@ -645,181 +636,6 @@ check_option (int argc, char *argv[])
     return optind;
 }
 
-
-/*
- * strtrim: removes leading & trailing white spaces(space, tab, new-line, etc)
- * from a given character string and returns a pointer to the new string.
- * Do free(3) it later.
- */
-char *
-strtrim (const char *s)
-{
-    if (s == NULL)
-        return NULL;
-
-    const char *e = &s[strlen(s) - 1];
-
-    while (*s)
-        if (isspace (*s))
-            s++;
-        else
-            break;
-    while (*e)
-        if (isspace (*e))
-            e--;
-        else
-            break;
-    e++;
-
-    return strndup (s, e - s);
-}
-
-/* checks if the given variable is valid & used by dnscache. */
-int
-check_variable (const char *var)
-{
-    assert (var != NULL);
-
-    int i = 0, l = 0;
-    const char *known_variable[] = \
-    {
-        "DATALIMIT", "CACHESIZE", "IP", "IPSEND",
-        "UID", "GID", "ROOT", "HIDETTL", "FORWARDONLY"
-    };
-
-    l = sizeof (known_variable) / sizeof (*known_variable);
-    for (i = 0; i < l; i++)
-    {
-        if (strlen (var) != strlen (known_variable[i]))
-            continue;
-        if (!memcmp (var, known_variable[i], strlen (var)))
-            return 1;
-    }
-
-    return 0;
-}
-
-void
-read_conf (const char *file)
-{
-    assert (file != NULL);
-
-    int lcount = 0;
-    FILE *fp = NULL;
-    size_t l = 0, n = 0;
-    void seed_addtime (void);
-    char *line = NULL, *key = NULL, *val = NULL;
-
-    if (!(fp = fopen (file, "r")))
-        err (-1, "could not open file `%s'", file);
-
-    while ((n = getline (&line, &l, fp)) != -1)
-    {
-        lcount++;
-        line[n - 1] = '\0';
-        char *s = strtrim (line);
-        if (*s && *s != '#' && *s != '\n')
-        {
-            key = strtrim (strtok (s, "="));
-            if (!check_variable (key))
-                errx (-1, "%s: %d: unknown variable `%s'", file, lcount, key);
-
-            val = strtrim (strtok (NULL, "="));
-            if (debug_level)
-                warnx ("%s: %s", key, val);
-
-            if (val)
-            {
-                setenv (key, val, 1);
-                free (val)      /* free is a macro, thus no `;' */
-            }
-
-            free (s)
-            free (key)
-            free (line)
-        }
-        seed_addtime ();
-    }
-
-    fclose (fp);
-}
-
-void
-seed_adduint32 (uint32 u)
-{
-    int i = 0;
-
-    seed[seedpos] += u;
-    if (++seedpos == 32)
-    {
-        for (i = 0; i < 32; ++i)
-        {
-            u = ((u ^ seed[i]) + 0x9e3779b9) ^ (u << 7) ^ (u >> 25);
-            seed[i] = u;
-        }
-        seedpos = 0;
-    }
-}
-
-void
-seed_addtime (void)
-{
-    int i = 0;
-    struct taia t;
-    char tpack[TAIA_PACK];
-
-    taia_now (&t);
-    taia_pack (tpack, &t);
-    for (i = 0; i < TAIA_PACK; ++i)
-        seed_adduint32 (tpack[i]);
-}
-
-
-/* redirect stdout & stderr to a log file */
-void
-redirect_to_log (const char *logfile)
-{
-    assert (logfile != NULL);
-
-    int fd = 0, perm = S_IRUSR | S_IWUSR;
-
-    if ((fd = open (logfile, O_CREAT | O_WRONLY | O_APPEND, perm)) == -1)
-        err (-1, "could not open logfile `%s'", logfile);
-
-    if (dup2 (fd, STDOUT_FILENO) == -1)
-        err (-1, "could not duplicate stdout");
-    if (dup2 (fd, STDERR_FILENO) == -1)
-        err (-1, "could not duplicate stderr");
-}
-
-/*
- * wirets pid to a file under /var/run directory, which will be used by
- * /sbin/service to shut down the dns daemon.
- */
-void
-write_pid (void)
-{
-    char pid[] = PIDFILE;
-    int n = 0, fd = 0, perm = 0;
-
-    perm = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-    if ((fd = open (pid, O_CREAT | O_WRONLY | O_TRUNC, perm)) == -1)
-        err (-1, "could not open file: `%s'", pid);
-
-    memset (pid, '\0', sizeof (pid));
-    n = sprintf (pid, "%d\n", getpid ());
-    write (fd, pid, n);
-
-    close (fd);
-}
-
-void
-handle_term (int n)
-{
-    warnx ("going down with signal: %d ---\n", n);
-
-    exit (0);
-}
 
 int
 main (int argc, char *argv[])
@@ -907,7 +723,7 @@ main (int argc, char *argv[])
         /* redirect stdout & stderr to a log file */
         redirect_to_log (LOGFILE);
 
-        write_pid ();
+        write_pid (PIDFILE);
     }
 
     seed_addtime ();

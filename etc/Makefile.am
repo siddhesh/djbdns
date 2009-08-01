@@ -14,11 +14,12 @@
 SUBDIRS = ip servers
 
 confdir = $(sysconfdir)/djbdns
-conf_DATA = dnscache.conf
+conf_DATA = dnscache.conf tinydns.conf
 
-$(conf_DATA): dnscache-conf
+$(conf_DATA): dnscache-conf tinydns-conf
 	sed -e 's:PREFIX:${confdir}:' dnscache-conf > dnscache.conf
+	sed -e 's:PREFIX:${confdir}:' tinydns-conf > tinydns.conf
 
 
 CLEANFILES = $(conf_DATA)
-EXTRA_DIST = dnscache-conf dnsroots.global
+EXTRA_DIST = dnscache-conf tinydns-conf dnsroots.global

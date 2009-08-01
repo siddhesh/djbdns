@@ -59,7 +59,7 @@ printh (void)
     printf ("%-17s %s\n", "    -h --help", "print this help");
     printf ("%-17s %s\n", "    -n --new", "use new output style");
     printf ("%-17s %s\n", "    -v --version", "print version information");
-    printf ("\nReport bugs to <prasad@redhat.com>\n");
+    printf ("\nReport bugs to <pj.pandit@yahoo.co.in>\n");
 }
 
 int

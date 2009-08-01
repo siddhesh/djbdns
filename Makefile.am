@@ -17,12 +17,11 @@ AM_CFLAGS=-g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 SUBDIRS = etc
 
 bin_PROGRAMS = dnscache dnsip dnsipq dnsq dnsmx dnsname dnstxt dnsqr \
-	dnsfilter
+	dnsfilter dnstrace tinydns tinydns-data tinydns-edit tinydns-get
 
-noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf \
-	dnstrace pickdns pickdns-conf pickdns-data \
-	random-ip rbldns rbldns-conf rbldns-data tinydns tinydns-conf \
-	tinydns-data tinydns-edit tinydns-get walldns walldns-conf
+noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf tinydns-conf \
+	pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf \
+	rbldns-data walldns walldns-conf
 
 bin_SCRIPTS = djbdns dnstracesort
 
@@ -52,9 +51,9 @@ djbdns: djbdns.sh
 	sed -e 's:PREFIX:${prefix}:' djbdns.sh > djbdns
 
 dnscache_SOURCES = dnscache.c droproot.c okclient.c log.c cache.c query.c \
-	response.c dd.c roots.c iopause.c prot.c \
+	response.c dd.c roots.c iopause.c prot.c common.c \
 	response.h select.h prot.h roots.h query.h cache.h log.h okclient.h \
-	dd.h direntry.h hasshsgr.h version.h
+	dd.h direntry.h hasshsgr.h version.h common.h
 dnscache_LDADD = libdns.a libenv.a liballoc.a libbuffer.a libtai.a \
 	libunix.a libbyte.a
 
@@ -117,7 +116,7 @@ dnstxt_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
 pickdns_SOURCES = pickdns.c server.c response.c droproot.c qlog.c prot.c \
-	qlog.h response.h prot.h hasshsgr.h
+	common.c qlog.h response.h prot.h hasshsgr.h common.h
 pickdns_LDADD = libdns.a libenv.a libtai.a libcdb.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
@@ -133,7 +132,7 @@ random_ip_SOURCES = random-ip.c
 random_ip_LDADD = libdns.a libtai.a libbuffer.a libunix.a libbyte.a
 
 rbldns_SOURCES = rbldns.c server.c response.c dd.c droproot.c qlog.c prot.c \
-	qlog.h response.h prot.h dd.h hasshsgr.h
+	common.c qlog.h response.h prot.h dd.h hasshsgr.h common.h
 rbldns_LDADD = libdns.a libenv.a libtai.a libcdb.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
@@ -145,8 +144,8 @@ rbldns_data_SOURCES = rbldns-data.c
 rbldns_data_LDADD = libcdb.a liballoc.a libbuffer.a libunix.a libbyte.a
 
 tinydns_SOURCES = tinydns.c server.c droproot.c tdlookup.c response.c \
-	qlog.c prot.c \
-	qlog.h response.h prot.h hasshsgr.h
+	qlog.c prot.c common.c \
+	qlog.h response.h prot.h hasshsgr.h common.h
 tinydns_LDADD = libdns.a libtai.a libenv.a libcdb.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
@@ -168,9 +167,9 @@ tinydns_get_LDADD = libdns.a libtai.a libcdb.a libbuffer.a liballoc.a \
 	libunix.a libbyte.a
 
 walldns_SOURCES = walldns.c server.c response.c droproot.c qlog.c prot.c dd.c \
-	qlog.h response.h prot.h dd.h hasshsgr.h
+	common.c qlog.h response.h prot.h dd.h hasshsgr.h common.h
 walldns_LDADD = libdns.a libenv.a libcdb.a liballoc.a libbuffer.a \
-	libunix.a libbyte.a
+	libunix.a libbyte.a libtai.a
 
 walldns_conf_SOURCES = walldns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h

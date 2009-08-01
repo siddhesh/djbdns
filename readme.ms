@@ -15,7 +15,7 @@
 
 
 .DS C
-djbdns-1.05.2
+djbdns-1.05.3
 =============
 .DE
 
@@ -23,7 +23,7 @@ djbdns-1.05.2
 Hello all,
 
 .PP
-I am pleased to release this *new* version of djbdns-1.05.2. Djbdns is a
+I am pleased to release this *new* version of djbdns-1.05.3. Djbdns is a
 fully-fledged Domain Name System(DNS), originally written by the eminent
 author of qmail, Dr. D J Bernstein. This new release is a complete makeover
 to the original source(djbdns-1.05) and is meant to make life a lot more
@@ -74,8 +74,8 @@ Problems:
 
 .PP
 If you encounter any problems while installing djbdns OR find any bugs in
-working of djbdns, please send an email to <prasad@redhat.com> describing in
-details about the problem/bug.
+working of djbdns, please send an email to <pj.pandit@yahoo.co.in> describing
+in details about the problem/bug.
 
 .sp 2
 .LP

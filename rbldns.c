@@ -10,8 +10,6 @@
 #include "strerr.h"
 #include "response.h"
 
-short debug_level = 0;
-
 static char *base;
 static struct cdb c;
 static char key[5];

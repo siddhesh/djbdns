@@ -45,7 +45,7 @@ and in case of any error it goes like
  print version information
 
 .SH BUGS
-Report bugs to <prasad@redhat.com>
+Report bugs to <pj.pandit@yahoo.co.in>
 
 .SH AUTHOR
 Prasad J Pandit

@@ -1,4 +1,63 @@
-Apr 15 2009 pjp <prasad@redhat.com>
+Aug  1 2009 pjp <pj.pandit@yahoo.co.in>
+
+	* README:
+	* readme.ms: version changed to 1.05.3
+
+	* Makefile.am:
+	* Makefile.in: dnstrace tinydns tinydns-data tinydns-edit and
+	  tinydns-get moved to bin_PROGRAMS. Also files common.[ch] added
+	  to targets such as tinydns, walldns, pickdns, rbldns etc.
+
+	* common.c: New file added to hold functions like read_conf() and
+	  handle_term() etc. These functions are called from all *dns and from
+	  the dnscache program.
+
+	* common.h: declares functions defined in common.c
+
+	* djbdns.sh: debug level for dnscache changed to -d3 from -d2.
+
+	* dns.h: added the copyright disclaimer to the top.
+
+	* dns_dfd.c:
+	* dnsfilter.c:
+	* dns_domain.c:
+	* dns_random.c: formatted to a more conventional coding style and did
+	  add the copyright disclaimer at the top.
+
+	* dnscache.c: few common functions like read_conf(), handle_term() etc
+	  are moved to common.c and the same is now linked with dnscache.
+
+	* server.c:
+	* dnstxt.c:
+	* dnsname.c:
+	* dnstrace.c:
+	* socket_send.c: formatted to a more conventional coding style; Did
+	  add couple of functions to process options and print help; Also wrote
+	  the copyright disclaimer at the top.
+
+	* etc/tinydns-conf: New file introduced to hold configuration of tinydns
+	  program.
+
+	* etc/Makefile.am:
+	* etc/Makefile.in: Added tinydns-conf to conf_DATA and EXTRA_DIST for
+	  installation and distribution.
+
+	* rbldns.c:
+	* pickdns.c:
+	* walldns.c: definition: `short debug_level = 0;' moved to server.c
+
+	* tinydns.c:
+	* tinydns-get.c:
+	* tinydns-data.c:
+	* tinydns-edit.c: formatted to a more conventional coding style; Did
+	  add couple of functions to process options and print help; Also wrote
+	  the copyright disclaimer at the top.
+
+	* version.h: version string changed to: 1.05.3 
+
+	My email address changed to <pj.pandit@yahoo.co.in>
+
+Apr 15 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* dnsfilter.ms: new manual page for dnsfilter.
 
@@ -16,7 +75,7 @@ Apr 15 2009 pjp <prasad@redhat.com>
 	* log.c: modified to print IP, PORT & logid as decimal values instead
 	  of hexadecimal.
 
-Mar 24 2009 pjp <prasad@redhat.com>
+Mar 24 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* axfrdns.c
 	  buffer_put.c
@@ -58,7 +117,7 @@ Mar 24 2009 pjp <prasad@redhat.com>
 	* dnscache.c: now setrlimit() data segment size to DATALIMIT as
 	  specified in dnscache.conf
 
-Mar 23 2009 pjp <prasad@redhat.com>
+Mar 23 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* Released the second version djbdns-1.05.2 that includes all the
 	  changes done so far.
@@ -66,7 +125,7 @@ Mar 23 2009 pjp <prasad@redhat.com>
 	* etc/servers/@ and etc/dnsroots.global is updated to the latest root
 	  name servers from ftp://rs.internic.net/domain/named.root
 
-Mar 20 2009 pjp <prasad@redhat.com>
+Mar 20 2009 pjp <pj.pandit@yahoo.co.in>
 	
 	* dnsq.c:
 	  dnsip.c:
@@ -102,7 +161,7 @@ Mar 20 2009 pjp <prasad@redhat.com>
 
 	* version.h: version changed to 1.05.2, not yet released though.
 
-Mar 17 2009 pjp <prasad@redhat.com>
+Mar 17 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* Makefile.am: changed to install `dnsip' command.
 
@@ -141,7 +200,7 @@ Mar 17 2009 pjp <prasad@redhat.com>
 	  All the above files are formatted as per the coding style
 	  convenient to me. Also did add the copyright disclaimer at the top.
 
-Mar 13 2009 pjp <prasad@redhat.com>
+Mar 13 2009 pjp <pj.pandit@yahoo.co.in>
 	
 	* response.c: patched with the latest Matthew Dempsky patch available
 	  at: http://marc.info/?l=djbdns&m=123613000920446&w=2
@@ -172,7 +231,7 @@ Mar 13 2009 pjp <prasad@redhat.com>
 	* readme.ms: changed to reference a web-link wherein DJB put his work
 	  in public-domain. Obviously, the same goes to README.
 
-Mar  3 2009 pjp <prasad@redhat.com>
+Mar  3 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* This new release is djbdns version 1.05.1. The new build system makes
 	  use of the GNU auto-tools and is fully integrated with the linux

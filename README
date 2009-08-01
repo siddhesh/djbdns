@@ -2,7 +2,7 @@
 
 
 
-                                 djbdns-1.05.2
+                                 djbdns-1.05.3
                                  =============
 
 
@@ -10,7 +10,7 @@
           Hello all,
 
                I   am   pleased  to  release  this  *new*  version  of
-          djbdns-1.05.2.  Djbdns  is  a  fully-fledged   Domain   Name
+          djbdns-1.05.3.  Djbdns  is  a  fully-fledged   Domain   Name
           System(DNS),  originally  written  by  the eminent author of
           qmail, Dr. D J Bernstein. This new  release  is  a  complete
           makeover to the original source(djbdns-1.05) and is meant to
@@ -51,7 +51,6 @@
                         OR
                sh># dnscache -D
 
-
           Consult the dnscahce(1) manual page for more help.
 
 
@@ -60,11 +59,8 @@
 
                If  you  encounter any problems while installing djbdns
           OR find any bugs in working of djbdns, please send an  email
-          to  <prasad@redhat.com>  describing  in  details  about  the
+          to  <pj.pandit@yahoo.co.in>  describing in details about the
           problem/bug.
 
 
-
-
           Thank you!
-

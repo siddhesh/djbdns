@@ -24,7 +24,11 @@
 
 #include <err.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
+#include <getopt.h>
+
+#include "version.h"
 
 #include "ip4.h"
 #include "dns.h"
@@ -35,14 +39,78 @@ static char seed[128];
 
 char ip[4];
 static stralloc out;
+static char *prog = NULL;
+
+
+void
+usage (void)
+{
+    printf ("Usage: %s <address> [<address> ...]\n", prog);
+}
+
+
+void
+printh (void)
+{
+    usage ();
+    printf ("\n Options:\n");
+    printf ("%-17s %s\n", "    -h --help", "print this help");
+    printf ("%-17s %s\n", "    -v --version", "print version information");
+    printf ("\nReport bugs to <pj.pandit@yahoo.co.in>\n");
+}
+
+
+int
+check_option (int argc, char *argv[])
+{
+    int n = 0, ind = 0;
+    const char optstr[] = "+:hv";
+    struct option lopt[] = \
+    {
+        { "help", no_argument, NULL, 'h' },
+        { "version", no_argument, NULL, 'v' },
+        { 0, 0, 0, 0 }
+    };
+
+    if (argc < 2)
+    {
+        usage ();
+        exit (0);
+    }
+
+    opterr = optind = 0;
+    while ((n = getopt_long (argc, argv, optstr, lopt, &ind)) != -1)
+    {
+        switch (n)
+        {
+        case 'h':
+            printh ();
+            exit (0);
+
+        case 'v':
+            printf ("%s is part of djbdns version %s\n", prog, VERSION);
+            exit (0);
+
+        default:
+            errx (-1, "unknown option `%c', see: --help", optopt);
+        }
+    }
+
+    return optind;
+}
+
 
 int
 main (int argc, char *argv[])
 {
+    int n = 0;
+    char *x = NULL;
     dns_random_init (seed);
 
-    if (*argv)
-        ++argv;
+    prog = strdup ((x = strrchr (argv[0], '/')) != NULL ? x + 1 : argv[0]);
+    n = check_option (argc, argv);
+    argv += n;
+    argc -= n;
 
     while (*argv)
     {

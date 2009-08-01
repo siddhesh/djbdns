@@ -1,6 +1,10 @@
 /*
- * version.h: This file is part of the `djbdns' project.
+ * common.h: This file is part of the `djbdns' project, originally written
+ * by Dr. D J Bernstein and later released under public-domain since late
+ * December 2007 (http://cr.yp.to/distributors.html).
  *
+ * I've modified this file for good and am releasing this new version under
+ * GNU General Public License.
  * Copyright (C) 2009 Prasad J Pandit
  *
  * This program is a free software; you can redistribute it and/or modify
@@ -18,9 +22,23 @@
  * Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+#ifndef COMMON_H
+#define COMMON_H
 
-#ifndef VERSION_H
+extern void seed_adduint32 (uint32);
 
-#define VERSION "1.05.3"
+extern void seed_addtime (void);
+
+extern char * strtrim (const char *);
+
+extern int check_variable (const char *);
+
+extern void read_conf (const char *);
+
+extern void redirect_to_log (const char *);
+
+extern void write_pid (const char *);
+
+extern void handle_term (int);
 
 #endif

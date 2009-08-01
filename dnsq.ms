@@ -88,7 +88,7 @@ Request for a transfer of an entire zone.
 
 
 .SH BUGS
-Report bugs to <prasad@redhat.com>
+Report bugs to <pj.pandit@yahoo.co.in>
 
 .SH AUTHOR
 Prasad J Pandit

@@ -39,7 +39,7 @@ start ()
 
     # Start daemon.
     echo -n $"Starting `basename $prog`: "
-    daemon $prog -d2 -D 2>> $logfile
+    daemon $prog -d3 -D 2>> $logfile
     RETVAL=$?
 
     chmod og= $logfile

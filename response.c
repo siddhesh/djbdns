@@ -174,7 +174,7 @@ response_servfail (void)
 void
 response_id (const char id[2])
 {
-    byte_copy(response,2,id);
+    byte_copy (response, 2, id);
 }
 
 void

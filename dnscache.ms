@@ -61,7 +61,7 @@ Note: these files list IP addresses of name servers one on each line.
  /var/log/dnscache.log
 
 .SH BUGS
-Report bugs to <prasad@redhat.com>
+Report bugs to <pj.pandit@yahoo.co.in>
 
 .SH AUTHOR
 Prasad J Pandit
