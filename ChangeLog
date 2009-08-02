@@ -1,3 +1,13 @@
+Aug  2 2009 pjp <pj.pandit@yahoo.co.in>
+
+	* djbdns.ms:
+	* tinydns.ms:
+	* tinydns-get.ms:
+	* tinydns-data.ms:
+	* tinydns-edit.ms: added new manual pages for tinydns* programs.
+
+	* Makefile.am: changed to install tinydns*.1 manual pages.
+
 Aug  1 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* README:

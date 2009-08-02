@@ -503,8 +503,12 @@ AM_CFLAGS = -g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
 
 SUBDIRS = etc
 bin_SCRIPTS = djbdns dnstracesort
-noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms
-nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms djbdns.ms \
+	tinydns-data.ms tinydns-edit.ms tinydns-get.ms tinydns.ms
+
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1 djbdns.1 \
+	tinydns-data.1 tinydns-edit.1 tinydns-get.1 tinydns.1
+
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
 	TODO ChangeLog COPYING $(noinst_MANS)
@@ -1635,6 +1639,9 @@ uninstall-man: uninstall-man1
 djbdns: djbdns.sh
 	sed -e 's:PREFIX:${prefix}:' djbdns.sh > djbdns
 
+djbdns.1: djbdns.ms
+	cp djbdns.ms djbdns.1
+
 dnscache.1: dnscache.ms
 	sed -e 's:PREFIX:${sysconfdir}:' dnscache.ms > dnscache.1
 
@@ -1649,6 +1656,18 @@ dnsq.1: dnsq.ms
 
 dnstracesort: dnstracesort.sh
 	cp dnstracesort.sh dnstracesort
+
+tinydns.1: tinydns.ms
+	sed -e 's:PREFIX:${sysconfdir}:' tinydns.ms > tinydns.1
+
+tinydns-data.1: tinydns-data.ms
+	cp tinydns-data.ms tinydns-data.1
+
+tinydns-edit.1: tinydns-edit.ms
+	cp tinydns-edit.ms tinydns-edit.1
+
+tinydns-get.1: tinydns-get.ms
+	cp tinydns-get.ms tinydns-get.1
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

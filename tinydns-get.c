@@ -125,17 +125,17 @@ main (int argc, char *argv[])
     }
 
     if (!parsetype (*argv, type))
-        errx (-1, "could not parse type `%s'", argv);
+        errx (-1, "could not parse type `%s'", *argv);
     argv++;
 
     if (!dns_domain_fromdot (&q, *argv, str_len (*argv)))
-        errx (-1, "could not parse name `%s'", argv);
+        errx (-1, "could not parse name `%s'", *argv);
     argv++;    
 
     if (*argv)
     {
         if (!ip4_scan (*argv, ip))
-            errx (-1, "could not parse address `%s'", argv);
+            errx (-1, "could not parse address `%s'", *argv);
     }
 
     if (!stralloc_copys (&out, ""))

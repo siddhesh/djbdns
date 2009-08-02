@@ -1,6 +1,6 @@
 \"
 \" dnscache.1: This is a manuscript of the manual page for `dnscache'. This
-\" file is part of the `djbdns' project version 1.05.1.
+\" file is part of the `djbdns' project version 1.05.1 and later.
 \"
 
 \" No hyphenation
@@ -8,7 +8,8 @@
 .nr HY 0
 
 .TH dnscache 1
-dnscache - djbdns DNS cache daemon.
+.SH NAME
+\fBdnscache\fR - djbdns DNS cache daemon.
 
 .SH SYNOPSYS
 .TP 5

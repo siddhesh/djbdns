@@ -25,8 +25,11 @@ noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf tinydns-conf \
 
 bin_SCRIPTS = djbdns dnstracesort
 
-noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms
-nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1
+noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms djbdns.ms \
+	tinydns-data.ms tinydns-edit.ms tinydns-get.ms tinydns.ms
+
+nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1 djbdns.1 \
+	tinydns-data.1 tinydns-edit.1 tinydns-get.1 tinydns.1
 
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
 EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
@@ -49,6 +52,9 @@ axfr_get_LDADD = libdns.a libtai.a liballoc.a libbuffer.a libunix.a libbyte.a
 
 djbdns: djbdns.sh
 	sed -e 's:PREFIX:${prefix}:' djbdns.sh > djbdns
+
+djbdns.1: djbdns.ms
+	cp djbdns.ms djbdns.1
 
 dnscache_SOURCES = dnscache.c droproot.c okclient.c log.c cache.c query.c \
 	response.c dd.c roots.c iopause.c prot.c common.c \
@@ -149,6 +155,9 @@ tinydns_SOURCES = tinydns.c server.c droproot.c tdlookup.c response.c \
 tinydns_LDADD = libdns.a libtai.a libenv.a libcdb.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
+tinydns.1: tinydns.ms
+	sed -e 's:PREFIX:${sysconfdir}:' tinydns.ms > tinydns.1
+
 tinydns_conf_SOURCES = tinydns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h
 tinydns_conf_LDADD = libbuffer.a libunix.a libbyte.a
@@ -157,14 +166,23 @@ tinydns_data_SOURCES = tinydns-data.c
 tinydns_data_LDADD = libcdb.a libdns.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
 
+tinydns-data.1: tinydns-data.ms
+	cp tinydns-data.ms tinydns-data.1
+
 tinydns_edit_SOURCES = tinydns-edit.c
 tinydns_edit_LDADD = libdns.a liballoc.a libbuffer.a libunix.a libbyte.a
+
+tinydns-edit.1: tinydns-edit.ms
+	cp tinydns-edit.ms tinydns-edit.1
 
 tinydns_get_SOURCES = tinydns-get.c tdlookup.c response.c printpacket.c \
 	printrecord.c parsetype.c \
 	response.h printrecord.h
 tinydns_get_LDADD = libdns.a libtai.a libcdb.a libbuffer.a liballoc.a \
 	libunix.a libbyte.a
+
+tinydns-get.1: tinydns-get.ms
+	cp tinydns-get.ms tinydns-get.1
 
 walldns_SOURCES = walldns.c server.c response.c droproot.c qlog.c prot.c dd.c \
 	common.c qlog.h response.h prot.h dd.h hasshsgr.h common.h
