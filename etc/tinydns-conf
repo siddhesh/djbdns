@@ -43,7 +43,7 @@ GID=2
 # Obviously, the user whose ID is mentioned above MUST be able to read from
 # this directory.
 #
-# Also, this is where `ip/' and `servers/' directories should reside.
+# Also, this is where `data' and `data.cdb' files should reside.
 #
 ROOT=PREFIX
 

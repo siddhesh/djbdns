@@ -40,6 +40,61 @@
 
 extern short mode, debug_level;
 
+
+#if defined (__FreeBSD__)
+
+#include <sys/stat.h>
+
+ssize_t
+extend_buffer (char **buf)
+{
+    ssize_t n = 128;
+    char *newbuf = NULL;
+
+    if (*buf)
+        n += strlen (*buf);
+
+    if (!(newbuf = calloc (n, sizeof (char))))
+        err (-1, "could not allocate enough memory");
+
+    if (*buf)
+    {
+        strncpy (newbuf, *buf, n);
+        free (*buf);
+    }
+
+    *buf = newbuf;
+    return n;
+}
+
+ssize_t
+getline (char **lineptr, ssize_t *n, FILE *stream)
+{
+    assert (stream != NULL);
+
+    int i = 0;
+    char c = 0, *buf = *lineptr;
+
+    while ((c = fgetc (stream)) != EOF)
+    {
+        if (!buf || i + 1 == *n)
+            *n = extend_buffer (&buf);
+
+        buf[i++] = c;
+        if (c == '\n' || c == '\0')
+            break;
+    }
+    *lineptr = buf;
+
+    if (c == EOF)
+        i = -1;
+
+    return i;
+}
+
+#endif      /* #if defined (__FreeBSD__) */
+
+
 uint32 seed[32];
 int seedpos = 0;
 

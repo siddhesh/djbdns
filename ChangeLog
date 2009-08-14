@@ -1,3 +1,10 @@
+Aug 14 2009 pjp <pj.pandit@yahoo.co.in>
+
+	* common.h:
+	* common.c: Defined couple of new functions extend_buffer() and
+	  getline(), so as to make it work on FreeBSD. For libc on FreeBSD
+	  does not have GNU extension function getline() & getdelim().
+
 Aug  2 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* djbdns.ms:

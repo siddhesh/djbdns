@@ -25,6 +25,14 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#if defined (__FreeBSD__)
+
+extern ssize_t extend_buffer (char **);
+
+extern ssize_t getline (char **, ssize_t *, FILE *);
+
+#endif
+
 extern void seed_adduint32 (uint32);
 
 extern void seed_addtime (void);
