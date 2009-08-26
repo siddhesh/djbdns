@@ -1,23 +1,21 @@
 #!/bin/sh
 #
-# djbdns: script is to start/stop the djbdns service daemon.
+# dnscached: an init script to start & stop the dnscache service daemon.
 #
 # chkconfig: 35 20 80
-# description: djbdns is a Domain Name System(DNS for short) daemon. \
-#              A DNS is a program used to map the given domain name to it's \
-#              IP address or vice versa.
+# description: dnscache is an iterative DNS resolver daemon. An iterative
+#              resolver is a program used to map the given domain name to
+#              it's IP address or vice versa.
 #
 
 ### BEGIN INIT INFO
-# Provides: djbdns
-# Required-Start: $network
-# Required-Stop: $network
-#
-# Short-Description: start and stop djbdns daemon.
-# Description: djbdns is a Domain Name System(DNS for short) daemon.
-#              A DNS is a program used to map the given domain name to it's
-#              IP address or vice versa.
-#
+# Provides:          dnscache
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     3 5
+# Default-Stop:      0 1 2 4 6
+# Short-Description: start and stop dnscache daemon at boot time.
+# Description:       dnscache is an iterative DNS resolver daemon.
 ### END INIT INFO
 
 # Source function library.
@@ -27,8 +25,8 @@
 . /etc/sysconfig/network
 
 prog=PREFIX/bin/dnscache
-logfile="/var/log/`basename $prog`.log"
-lockfile=/var/lock/subsys/`basename $prog`
+logfile="/var/log/${prog##[a-z/.]*/}.log"
+lockfile="/var/lock/subsys/${prog##[a-z/.]*/}"
 
 start ()
 {
@@ -38,7 +36,7 @@ start ()
     [ -x $prog ] || exit 5
 
     # Start daemon.
-    echo -n $"Starting `basename $prog`: "
+    echo -n $"Starting ${prog##[a-z/.]*/}: "
     daemon $prog -d3 -D 2>> $logfile
     RETVAL=$?
 
@@ -51,7 +49,7 @@ start ()
 
 stop ()
 {
-    echo -n $"Shutting down `basename $prog`: "
+    echo -n $"Shutting down ${prog##[a-z/.]*/}: "
     killproc $prog
     RETVAL=$?
     echo
@@ -61,7 +59,7 @@ stop ()
 }
 
 
-cmd="`basename $0`"
+cmd="${0##[a-z/.]*/}"
 
 # See how we were called.
 case "$1" in

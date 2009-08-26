@@ -502,7 +502,7 @@ AM_CFLAGS = -g -O2 -Wall -Wextra -D PREFIX=\"${prefix}\" \
                                -D SYSCONFDIR=\"${sysconfdir}\"
 
 SUBDIRS = etc
-bin_SCRIPTS = djbdns dnstracesort
+bin_SCRIPTS = dnscached tinydnsd dnstracesort
 noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms djbdns.ms \
 	tinydns-data.ms tinydns-edit.ms tinydns-get.ms tinydns.ms
 
@@ -510,8 +510,8 @@ nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1 djbdns.1 \
 	tinydns-data.1 tinydns-edit.1 tinydns-get.1 tinydns.1
 
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
-EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
-	TODO ChangeLog COPYING $(noinst_MANS)
+EXTRA_DIST = dnstracesort.sh dnscache.sh tinydns.sh readme.ms README \
+	INSTALL TODO ChangeLog COPYING $(noinst_MANS)
 
 axfrdns_SOURCES = axfrdns.c iopause.c droproot.c tdlookup.c response.c \
 	qlog.c prot.c timeoutread.c timeoutwrite.c \
@@ -1636,8 +1636,9 @@ uninstall-man: uninstall-man1
 	uninstall-man1
 
 
-djbdns: djbdns.sh
-	sed -e 's:PREFIX:${prefix}:' djbdns.sh > djbdns
+# an init script for dnscache service.
+dnscached: dnscache.sh
+	sed -e 's:PREFIX:${prefix}:' dnscache.sh > dnscached
 
 djbdns.1: djbdns.ms
 	cp djbdns.ms djbdns.1
@@ -1656,6 +1657,10 @@ dnsq.1: dnsq.ms
 
 dnstracesort: dnstracesort.sh
 	cp dnstracesort.sh dnstracesort
+
+# an init script for tinydns service.
+tinydnsd: tinydns.sh
+	sed -e 's:PREFIX:${prefix}:' tinydns.sh > tinydnsd
 
 tinydns.1: tinydns.ms
 	sed -e 's:PREFIX:${sysconfdir}:' tinydns.ms > tinydns.1

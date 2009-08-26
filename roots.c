@@ -25,16 +25,15 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "open.h"
-#include "error.h"
-#include "str.h"
-#include "byte.h"
-#include "error.h"
-#include "direntry.h"
 #include "ip4.h"
 #include "dns.h"
-#include "openreadclose.h"
+#include "str.h"
+#include "byte.h"
+#include "open.h"
+#include "error.h"
 #include "roots.h"
+#include "direntry.h"
+#include "openreadclose.h"
 
 static stralloc data;
 

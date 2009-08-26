@@ -23,7 +23,7 @@ noinst_PROGRAMS = axfrdns axfrdns-conf axfr-get dnscache-conf tinydns-conf \
 	pickdns pickdns-conf pickdns-data random-ip rbldns rbldns-conf \
 	rbldns-data walldns walldns-conf
 
-bin_SCRIPTS = djbdns dnstracesort
+bin_SCRIPTS = dnscached tinydnsd dnstracesort
 
 noinst_MANS = dnscache.ms dnsip.ms dnsq.ms dnsfilter.ms djbdns.ms \
 	tinydns-data.ms tinydns-edit.ms tinydns-get.ms tinydns.ms
@@ -32,8 +32,8 @@ nodist_man1_MANS = dnscache.1 dnsip.1 dnsq.1 dnsfilter.1 djbdns.1 \
 	tinydns-data.1 tinydns-edit.1 tinydns-get.1 tinydns.1
 
 CLEANFILES = $(bin_SCRIPTS) $(nodist_man1_MANS)
-EXTRA_DIST = dnstracesort.sh djbdns.sh readme.ms README INSTALL \
-	TODO ChangeLog COPYING $(noinst_MANS)
+EXTRA_DIST = dnstracesort.sh dnscache.sh tinydns.sh readme.ms README \
+	INSTALL TODO ChangeLog COPYING $(noinst_MANS)
 
 axfrdns_SOURCES = axfrdns.c iopause.c droproot.c tdlookup.c response.c \
 	qlog.c prot.c timeoutread.c timeoutwrite.c \
@@ -50,8 +50,9 @@ axfr_get_SOURCES = axfr-get.c iopause.c timeoutread.c timeoutwrite.c \
 	timeoutread.h timeoutwrite.h select.h
 axfr_get_LDADD = libdns.a libtai.a liballoc.a libbuffer.a libunix.a libbyte.a
 
-djbdns: djbdns.sh
-	sed -e 's:PREFIX:${prefix}:' djbdns.sh > djbdns
+# an init script for dnscache service.
+dnscached: dnscache.sh
+	sed -e 's:PREFIX:${prefix}:' dnscache.sh > dnscached
 
 djbdns.1: djbdns.ms
 	cp djbdns.ms djbdns.1
@@ -154,6 +155,10 @@ tinydns_SOURCES = tinydns.c server.c droproot.c tdlookup.c response.c \
 	qlog.h response.h prot.h hasshsgr.h common.h
 tinydns_LDADD = libdns.a libtai.a libenv.a libcdb.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+
+# an init script for tinydns service.
+tinydnsd: tinydns.sh
+	sed -e 's:PREFIX:${prefix}:' tinydns.sh > tinydnsd
 
 tinydns.1: tinydns.ms
 	sed -e 's:PREFIX:${sysconfdir}:' tinydns.ms > tinydns.1

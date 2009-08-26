@@ -1,3 +1,14 @@
+Aug 26 2009 pjp <pj.pandit@yahoo.co.in>
+
+	* Makefile.am: changed to install new init scripts dnscache.sh
+	  and tinydns.sh.
+
+	* changelog.ms: added a list of changes made in the 1.05.3 release.
+
+	* djbdns.sh -> dnscache.sh: initscript djbdns.sh renamed to dnscache.sh
+
+	* tinydns.sh: a new init script is added to start the tinydns service.
+
 Aug 14 2009 pjp <pj.pandit@yahoo.co.in>
 
 	* common.h:

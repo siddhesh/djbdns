@@ -18,6 +18,26 @@ Major changes
 .br
 =============
 
+.IP "+ djbdns-1.05.3" 4
+
+- Commands included tinydns, tinydns-data, tinydns-edit,
+  tinydns-get, dnstrace and couple more.
+.br
+- The new commands now accept command-line options.
+.br
+- tinydns now reads from etc/djbdns/tinydns.conf and
+  logs messages to /var/log/tinydns.log and requires no
+  support from daemontools.
+.br
+- New manuals written for djbdns, tinydns, tinydns-*.
+.br
+- All the changes done so far are ported to FreeBSD.
+  So from this release onwards, it will work on FreeBSD
+  and hopefully on other Unixes as well.
+.br
+- Source files formatted for reading & hacking comfort.
+
+
 .IP "+ djbdns-1.05.2" 4
 
 - Commands included dnsip, dnsipq, dnsq & dnstracesort
