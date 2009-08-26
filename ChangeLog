@@ -1,5 +1,17 @@
 Aug 26 2009 pjp <pj.pandit@yahoo.co.in>
 
+	* README:
+	* readme.ms: changed instructions to add dnscache to system
+	  services using chkconfig(8). Also, version number changed
+	  to 1.05.4
+
+	* configure.ac: version number changed to 1.05.4.
+
+	* common.h: did add  - #include "uint32.h"
+
+	* tinydns.c: changed to redirect log messages to a file and create
+	  a `/var/run/tinydns.pid' file when run in DAEMON mode.
+
 	* Makefile.am: changed to install new init scripts dnscache.sh
 	  and tinydns.sh.
 

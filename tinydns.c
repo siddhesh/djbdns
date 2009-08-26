@@ -23,17 +23,29 @@
  */
 
 #include "dns.h"
+#include "common.h"
 
 #define LOGFILE "/var/log/tinydns.log"
 #define PIDFILE "/var/run/tinydns.pid"
 #define CFGFILE SYSCONFDIR"/djbdns/tinydns.conf"
 
+extern short mode;
 static char seed[128];
+
+enum op_mode { DAEMON = 1, DEBUG = 2 };
 
 void
 initialize (void)
 {
     read_conf (CFGFILE);
+
+    if (mode & DAEMON)
+    {
+        /* redirect stdout & stderr to a log file */
+        redirect_to_log (LOGFILE);
+
+        write_pid (PIDFILE);
+    }
 
     dns_random_init (seed);
 }

@@ -15,7 +15,7 @@
 
 
 .DS C
-djbdns-1.05.3
+djbdns-1.05.4
 =============
 .DE
 
@@ -23,7 +23,7 @@ djbdns-1.05.3
 Hello all,
 
 .PP
-I am pleased to release this *new* version of djbdns-1.05.3. Djbdns is a
+I am pleased to release this *new* version of djbdns-1.05.4. Djbdns is a
 fully-fledged Domain Name System(DNS), originally written by the eminent
 author of qmail, Dr. D J Bernstein. This new release is a complete makeover
 to the original source(djbdns-1.05) and is meant to make life a lot more
@@ -50,17 +50,17 @@ sh># make install
 
 Once installed, On Linux machines add `dnscache' to the system services
 by following steps. Note that, if you chose a different install prefix with
-`--prefix' use that while creating the link with ln.
+`--prefix', use that instead of the default - /usr/local.
 .DS I
-sh># ln -s /usr/local/bin/djbdns /etc/init.d/djbdns
-sh># chkconfig --add djbdns
-sh># chkconfig --list djbdns
+sh># mv /usr/local/bin/dnscached /etc/init.d/dnscached
+sh># chkconfig --add dnscached
+sh># chkconfig --list dnscached
 .DE
 
 Now you can start the service by
 
 .DS I
-sh># service djbdns start
+sh># service dnscached start
          OR
 sh># dnscache -D
 .DE

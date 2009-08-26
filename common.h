@@ -25,6 +25,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "uint32.h"
+
 #if defined (__FreeBSD__)
 
 extern ssize_t extend_buffer (char **);
