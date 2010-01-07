@@ -26,8 +26,11 @@
           Installation:
           -------------
 
-          To install djbdns: just say
+          If you're building from git, you need to run  the  following
+          command before you proceed:
+               sh>$ ./gen
 
+          To install djbdns: just say
                sh>$ ./configure [ --prefix=/usr/local ]
                sh>$ make
                sh># make install

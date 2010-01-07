@@ -3,9 +3,11 @@
 
 AC_PREREQ([2.63])
 AC_INIT([djbdns], [1.05.4], [pj.pandit@yahoo.co.in])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE(dist-bzip2 dist-zip)
 AC_CONFIG_SRCDIR([dnsip.c])
 AC_CONFIG_HEADERS([config.h])
+
+AM_MAINTAINER_MODE
 
 # Checks for programs.
 AC_PROG_CC
