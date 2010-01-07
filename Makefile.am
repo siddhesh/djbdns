@@ -39,8 +39,10 @@ axfrdns_SOURCES = axfrdns.c iopause.c droproot.c tdlookup.c response.c \
 	qlog.c prot.c timeoutread.c timeoutwrite.c \
 	droproot.h timeoutread.h timeoutwrite.h qlog.h response.h select.h \
 	prot.h hasshsgr.h
-axfrdns_LDADD = libdns.a libtai.a liballoc.a libenv.a libcdb.a \
+axfrdns_LDADD = libdns.a libtai.a liballoc.a libenv.a \
 	libbuffer.a libunix.a libbyte.a
+
+axfrdns_LDFLAGS = -lcdb
 
 axfrdns_conf_SOURCES = axfrdns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h
@@ -124,37 +126,42 @@ dnstxt_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 
 pickdns_SOURCES = pickdns.c server.c response.c droproot.c qlog.c prot.c \
 	common.c qlog.h response.h prot.h hasshsgr.h common.h
-pickdns_LDADD = libdns.a libenv.a libtai.a libcdb.a liballoc.a libbuffer.a \
+pickdns_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+pickdns_LDFLAGS = -lcdb
 
 pickdns_conf_SOURCES = pickdns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h
 pickdns_conf_LDADD = libbuffer.a libunix.a libbyte.a
 
 pickdns_data_SOURCES = pickdns-data.c
-pickdns_data_LDADD = libcdb.a libdns.a liballoc.a libbuffer.a \
+pickdns_data_LDADD = libdns.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+pickdns_data_LDFLAGS = -lcdb
 
 random_ip_SOURCES = random-ip.c
 random_ip_LDADD = libdns.a libtai.a libbuffer.a libunix.a libbyte.a
 
 rbldns_SOURCES = rbldns.c server.c response.c dd.c droproot.c qlog.c prot.c \
 	common.c qlog.h response.h prot.h dd.h hasshsgr.h common.h
-rbldns_LDADD = libdns.a libenv.a libtai.a libcdb.a liballoc.a libbuffer.a \
+rbldns_LDADD = libdns.a libenv.a libtai.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+rbldns_LDFLAGS = -lcdb
 
 rbldns_conf_SOURCES = rbldns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h
 rbldns_conf_LDADD = libbuffer.a libunix.a libbyte.a
 
 rbldns_data_SOURCES = rbldns-data.c
-rbldns_data_LDADD = libcdb.a liballoc.a libbuffer.a libunix.a libbyte.a
+rbldns_data_LDADD = liballoc.a libbuffer.a libunix.a libbyte.a
+rbldns_data_LDFLAGS = -lcdb
 
 tinydns_SOURCES = tinydns.c server.c droproot.c tdlookup.c response.c \
 	qlog.c prot.c common.c \
 	qlog.h response.h prot.h hasshsgr.h common.h
-tinydns_LDADD = libdns.a libtai.a libenv.a libcdb.a liballoc.a libbuffer.a \
+tinydns_LDADD = libdns.a libtai.a libenv.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+tinydns_LDFLAGS = -lcdb
 
 # an init script for tinydns service.
 tinydnsd: tinydns.sh
@@ -168,8 +175,9 @@ tinydns_conf_SOURCES = tinydns-conf.c generic-conf.c auto_home.c \
 tinydns_conf_LDADD = libbuffer.a libunix.a libbyte.a
 
 tinydns_data_SOURCES = tinydns-data.c
-tinydns_data_LDADD = libcdb.a libdns.a liballoc.a libbuffer.a \
+tinydns_data_LDADD = libdns.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a
+tinydns_data_LDFLAGS = -lcdb
 
 tinydns-data.1: tinydns-data.ms
 	cp tinydns-data.ms tinydns-data.1
@@ -183,16 +191,18 @@ tinydns-edit.1: tinydns-edit.ms
 tinydns_get_SOURCES = tinydns-get.c tdlookup.c response.c printpacket.c \
 	printrecord.c parsetype.c \
 	response.h printrecord.h
-tinydns_get_LDADD = libdns.a libtai.a libcdb.a libbuffer.a liballoc.a \
+tinydns_get_LDADD = libdns.a libtai.a libbuffer.a liballoc.a \
 	libunix.a libbyte.a
+tinydns_get_LDFLAGS = -lcdb
 
 tinydns-get.1: tinydns-get.ms
 	cp tinydns-get.ms tinydns-get.1
 
 walldns_SOURCES = walldns.c server.c response.c droproot.c qlog.c prot.c dd.c \
 	common.c qlog.h response.h prot.h dd.h hasshsgr.h common.h
-walldns_LDADD = libdns.a libenv.a libcdb.a liballoc.a libbuffer.a \
+walldns_LDADD = libdns.a libenv.a liballoc.a libbuffer.a \
 	libunix.a libbyte.a libtai.a
+walldns_LDFLAGS = -lcdb
 
 walldns_conf_SOURCES = walldns-conf.c generic-conf.c auto_home.c \
 	auto_home.h generic-conf.h
@@ -203,7 +213,7 @@ walldns_conf_LDADD = libbuffer.a libunix.a libbyte.a
 # Static libraries built for compilation. These are NOT installed.
 #
 
-noinst_LIBRARIES = liballoc.a libbuffer.a libbyte.a libcdb.a libdns.a \
+noinst_LIBRARIES = liballoc.a libbuffer.a libbyte.a libdns.a \
 	libenv.a libgetopt.a libtai.a libunix.a
 
 liballoc_a_SOURCES = alloc.c alloc_re.c getln.c getln2.c stralloc_cat.c \
@@ -223,8 +233,8 @@ libbyte_a_SOURCES = byte_chr.c byte_copy.c byte_cr.c byte_diff.c byte_zero.c \
 	uint32_unpack.c byte.h case.h fmt.h ip4.h scan.h str.h uint16.h \
 	uint32.h
 
-libcdb_a_SOURCES = cdb.c cdb_hash.c cdb_make.c \
-	error.h seek.h byte.h cdb.h uint32.h alloc.h cdb_make.h buffer.h
+#libcdb_a_SOURCES = cdb.c cdb_hash.c cdb_make.c \
+#	error.h seek.h byte.h cdb.h uint32.h alloc.h cdb_make.h buffer.h
 
 libdns_a_SOURCES = dns_dfd.c dns_domain.c dns_dtda.c dns_ip.c dns_ipq.c \
 	dns_mx.c dns_name.c dns_nd.c dns_packet.c dns_random.c dns_rcip.c \
