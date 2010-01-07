@@ -19,6 +19,8 @@ AC_PROG_LIBTOOL
 AC_HEADER_MAJOR
 AC_CHECK_HEADERS([fcntl.h netinet/in.h stdlib.h sys/param.h sys/socket.h sys/time.h unistd.h])
 
+AC_CHECK_LIB([cdb], [cdb_hash],,AC_MSG_ERROR([Could not find cdb libraries]))
+
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_OFF_T
 
